@@ -171,7 +171,7 @@ export default function RollingPizzaPage() {
 
             {/* THREE CORNER INGREDIENTS WITH POP-IN TRANSITION */}
 
-            {/* Corner 1: ONION (Top-Left / Middle-Left Side) */}
+            {/* Corner 1: ONION (Top-Left Corner - Symmetric with Garlic) */}
             <motion.img
               initial={{ scale: 0, opacity: 0, rotate: -35 }}
               animate={{ scale: 1, opacity: 1, rotate: -10 }}
@@ -179,10 +179,10 @@ export default function RollingPizzaPage() {
               transition={{ duration: 0.5, delay: 0.45, ease: [0.34, 1.56, 0.64, 1] }}
               src="/onion.png"
               alt="Fresh Onion"
-              className="absolute -top-4 -left-12 sm:top-2 sm:-left-24 md:top-6 md:-left-32 w-20 sm:w-28 md:w-36 h-20 sm:h-28 md:h-36 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] z-20 pointer-events-none"
+              className="absolute -top-7 -left-16 sm:-top-16 sm:-left-32 md:-top-10 md:-left-44 w-20 sm:w-28 md:w-36 h-20 sm:h-28 md:h-36 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] z-20 pointer-events-none"
             />
 
-            {/* Corner 2: GARLIC (Top-Right Corner - Moved Bit Up & Bit Right) */}
+            {/* Corner 2: GARLIC (Top-Right Corner) */}
             <motion.img
               initial={{ scale: 0, opacity: 0, rotate: 35 }}
               animate={{ scale: 1, opacity: 1, rotate: 12 }}
@@ -193,7 +193,7 @@ export default function RollingPizzaPage() {
               className="absolute -top-7 -right-16 sm:-top-16 sm:-right-32 md:-top-10 md:-right-44 w-20 sm:w-28 md:w-36 h-20 sm:h-28 md:h-36 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] z-20 pointer-events-none"
             />
 
-            {/* Corner 3: PANEER (Bottom-Right Corner) */}
+            {/* Corner 3: PANEER (Bottom-Right Corner - Symmetric with Garlic) */}
             <motion.img
               initial={{ scale: 0, opacity: 0, rotate: -25 }}
               animate={{ scale: 1, opacity: 1, rotate: -8 }}
@@ -201,7 +201,7 @@ export default function RollingPizzaPage() {
               transition={{ duration: 0.5, delay: 0.75, ease: [0.34, 1.56, 0.64, 1] }}
               src="/paneer.png"
               alt="Paneer Cubes"
-              className="absolute -bottom-6 -right-6 sm:-bottom-12 sm:-right-12 md:-bottom-16 md:-right-16 w-20 sm:w-28 md:w-36 h-20 sm:h-28 md:h-36 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] z-20 pointer-events-none"
+              className="absolute -bottom-7 -right-16 sm:-bottom-16 sm:-right-32 md:-bottom-10 md:-right-44 w-20 sm:w-28 md:w-36 h-20 sm:h-28 md:h-36 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] z-20 pointer-events-none"
             />
 
           </div>
