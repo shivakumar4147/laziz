@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { ChevronLeft, ChevronRight, X, Award, Store, Users, Sparkles, Menu } from "lucide-react";
 
 export default function RollingPizzaPage() {
@@ -123,22 +124,22 @@ export default function RollingPizzaPage() {
             {item}
           </button>
         ))}
-        <button 
-          onClick={() => setIsAboutOpen(true)}
-          className="px-5 py-2 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white bg-[#FF5500] hover:bg-[#FF6600] rounded-full transition-all cursor-pointer shadow-[0_4px_20px_rgba(255,85,0,0.4)] active:scale-95 border border-[#FF5500]"
+        <Link 
+          href="/order"
+          className="px-5 py-2 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white bg-[#FF5500] hover:bg-[#FF6600] rounded-full transition-all cursor-pointer shadow-[0_4px_20px_rgba(255,85,0,0.4)] active:scale-95 border border-[#FF5500] inline-block"
         >
           Order
-        </button>
+        </Link>
       </nav>
 
       {/* TOP RIGHT MOBILE CONTROLS */}
       <div className="fixed top-4 right-4 sm:top-6 sm:right-6 z-40 flex md:hidden items-center gap-2 pointer-events-auto">
-        <button 
-          onClick={() => setIsAboutOpen(true)}
-          className="px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white bg-[#FF5500] rounded-full active:scale-95 shadow-md"
+        <Link 
+          href="/order"
+          className="px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white bg-[#FF5500] rounded-full active:scale-95 shadow-md inline-block"
         >
           Order
-        </button>
+        </Link>
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="p-2 text-white bg-neutral-900 border border-neutral-800 rounded-full active:scale-95"

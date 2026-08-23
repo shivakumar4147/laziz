@@ -11,9 +11,10 @@ html, body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-outfit), sans-serif;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
   margin: 0;
   padding: 0;
 }
@@ -34,4 +35,19 @@ html, body {
 
 .text-white-spray-shadow {
   text-shadow: 0 0 14px rgba(255, 255, 255, 0.8), 3px 3px 0px #000;
+}
+
+/* Smooth custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #2A0508;
+}
+::-webkit-scrollbar-thumb {
+  background: #FF5500;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
 }
