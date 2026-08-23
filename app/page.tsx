@@ -95,7 +95,7 @@ export default function RollingPizzaPage() {
 
   return (
     <div className="w-screen h-screen bg-[#070707] flex flex-col items-center justify-between overflow-hidden relative select-none">
-      
+
       {/* TOP LEFT CORNER BRANDING IMAGE */}
       <div className="fixed top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 z-40 pointer-events-auto">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -124,7 +124,7 @@ export default function RollingPizzaPage() {
             {item}
           </button>
         ))}
-        <Link 
+        <Link
           href="/order"
           className="px-5 py-2 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white bg-[#FF5500] hover:bg-[#FF6600] rounded-full transition-all cursor-pointer shadow-[0_4px_20px_rgba(255,85,0,0.4)] active:scale-95 border border-[#FF5500] inline-block"
         >
@@ -134,7 +134,7 @@ export default function RollingPizzaPage() {
 
       {/* TOP RIGHT MOBILE CONTROLS */}
       <div className="fixed top-4 right-4 sm:top-6 sm:right-6 z-40 flex md:hidden items-center gap-2 pointer-events-auto">
-        <Link 
+        <Link
           href="/order"
           className="px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white bg-[#FF5500] rounded-full active:scale-95 shadow-md inline-block"
         >
@@ -199,7 +199,7 @@ export default function RollingPizzaPage() {
       <div className="relative w-full flex-1 flex flex-col items-center justify-center z-10 px-4 pt-12 md:pt-0">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <div key={page} className="relative flex flex-col items-center justify-center">
-            
+
             {/* CIRCULAR TEXT RING WRAPPED AROUND PIZZA */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-15 scale-125 sm:scale-115 md:scale-105">
               <svg viewBox="0 0 400 400" className="w-[115%] h-[115%] overflow-visible">
@@ -318,7 +318,7 @@ export default function RollingPizzaPage() {
         >
           <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
-        
+
         <button
           onClick={() => paginate(1)}
           className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-neutral-900/90 border border-neutral-700/80 text-white hover:bg-[#FF5500] hover:text-white hover:border-[#FF5500] flex items-center justify-center transition-all duration-200 shadow-xl cursor-pointer active:scale-95"
@@ -337,7 +337,7 @@ export default function RollingPizzaPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3 }}
-              className="bg-[#0F0F0F] border border-neutral-800 rounded-3xl max-w-2xl w-full p-5 sm:p-8 max-h-[88vh] overflow-y-auto relative text-white shadow-2xl custom-scrollbar"
+              className="card-dark-texture border border-neutral-800 rounded-3xl max-w-2xl w-full p-5 sm:p-8 max-h-[88vh] overflow-y-auto relative text-white shadow-2xl custom-scrollbar"
             >
               {/* Close Button */}
               <button
@@ -361,7 +361,7 @@ export default function RollingPizzaPage() {
 
               {/* Story Content */}
               <div className="space-y-5 sm:space-y-6 text-xs sm:text-sm text-neutral-300 font-normal leading-relaxed">
-                
+
                 <p>
                   We are proud to introduce ourselves as <strong className="text-white">Laziz Pizza™</strong> brand run by Laziz Food & Beverages based at Kolhapur, Western Maharashtra. Founded on <strong className="text-[#FF5500]">15th August 2013</strong>. Laziz Pizza™ is known for its Taste & Variety of Pizza. Laziz Pizza has a wide product portfolio of pizza to savor customers taste buds.
                 </p>
