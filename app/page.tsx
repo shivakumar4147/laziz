@@ -125,7 +125,7 @@ export default function RollingPizzaPage() {
     if (isHovered || isAboutOpen) return;
     const interval = setInterval(() => {
       paginate(1);
-    }, 2000);
+    }, 3500);
     return () => clearInterval(interval);
   }, [paginate, isHovered, isAboutOpen]);
 
