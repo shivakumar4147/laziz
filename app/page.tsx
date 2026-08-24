@@ -45,6 +45,16 @@ export default function RollingPizzaPage() {
     },
   ];
 
+  // Menu categories
+  const categories = [
+    { name: "Classic Pizza (Veg)", img: "/2.png" },
+    { name: "Exotic Pizza (Veg)", img: "/3.png" },
+    { name: "Special Pizza (Veg)", img: "/4.png" },
+    { name: "Classic Pizza (Non-Veg)", img: "/1.png" },
+    { name: "Exotic Pizza (Non-Veg)", img: "/5.png" },
+    { name: "Special Pizza (Non-Veg)", img: "/6.png" },
+  ];
+
   const [[page, direction], setPage] = useState([0, 0]);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -76,7 +86,7 @@ export default function RollingPizzaPage() {
     setPage([page + newDirection, newDirection]);
   };
 
-  // Snappy, synchronized animation for the pizza
+  // Snappy, synchronized GPU-accelerated animation for the pizza
   const imageVariants = {
     enter: (direction: number) => ({
       x: direction > 0 ? 500 : -500,
@@ -103,7 +113,7 @@ export default function RollingPizzaPage() {
   const segments = Array.from({ length: totalSegments });
 
   return (
-    <div className="w-screen h-screen bg-[radial-gradient(circle_at_center,_#6e1315_0%,_#1a0303_75%,_#000000_100%)] flex flex-col items-center justify-between overflow-hidden relative select-none">
+    <div className="w-screen min-h-screen bg-[radial-gradient(circle_at_center,_#6e1315_0%,_#1a0303_75%,_#000000_100%)] flex flex-col items-center justify-between overflow-y-auto relative select-none">
       
       {/* BACKGROUND (ALL WHITE TEXT FOR VISIBILITY) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
@@ -249,14 +259,14 @@ export default function RollingPizzaPage() {
       </AnimatePresence>
 
       {/* Animated Rolling Pizza & Ingredients Canvas */}
-      <div className="relative w-full flex-1 flex flex-col items-center justify-center z-10 px-4 pt-16 md:pt-0">
+      <div className="relative w-full flex flex-col items-center justify-center z-10 px-4 pt-32 sm:pt-36 md:pt-28 pb-4 md:pb-12">
         
-        {/* DESKTOP GLOWING ARROW BUTTONS (Absolute positioned on sides) */}
+        {/* DESKTOP GLOWING ARROW BUTTONS */}
         <motion.button
           whileHover={{ scale: 1.15, backgroundColor: "#ffffff", color: "#6e1315" }}
           whileTap={{ scale: 0.9 }}
           onClick={() => paginate(-1)}
-          className="hidden md:flex absolute left-[27%] z-30 w-14 h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/30 text-white items-center justify-center transition-shadow duration-300 shadow-[0_0_25px_rgba(0,0,0,0.7)] cursor-pointer group"
+          className="hidden md:flex absolute left-[27%] top-[45%] transform -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/30 text-white items-center justify-center transition-shadow duration-300 shadow-[0_0_25px_rgba(0,0,0,0.7)] cursor-pointer group"
           aria-label="Previous Pizza"
         >
           <ChevronLeft className="w-7 h-7 transition-transform group-hover:-translate-x-1" />
@@ -266,7 +276,7 @@ export default function RollingPizzaPage() {
           whileHover={{ scale: 1.15, backgroundColor: "#ffffff", color: "#6e1315" }}
           whileTap={{ scale: 0.9 }}
           onClick={() => paginate(1)}
-          className="hidden md:flex absolute right-[27%] z-30 w-14 h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/30 text-white items-center justify-center transition-shadow duration-300 shadow-[0_0_25px_rgba(0,0,0,0.7)] cursor-pointer group"
+          className="hidden md:flex absolute right-[27%] top-[45%] transform -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/30 text-white items-center justify-center transition-shadow duration-300 shadow-[0_0_25px_rgba(0,0,0,0.7)] cursor-pointer group"
           aria-label="Next Pizza"
         >
           <ChevronRight className="w-7 h-7 transition-transform group-hover:translate-x-1" />
@@ -282,6 +292,7 @@ export default function RollingPizzaPage() {
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               exit={{ opacity: 0, scale: 0.85, rotate: direction < 0 ? 180 : -180 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
               className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 scale-[0.85] sm:scale-95 md:scale-90"
             >
               <svg viewBox="0 0 400 400" className="w-[125%] h-[125%] overflow-visible">
@@ -307,7 +318,7 @@ export default function RollingPizzaPage() {
               </svg>
             </motion.div>
 
-            {/* ROLLING PIZZA */}
+            {/* ROLLING PIZZA (GPU Accelerated) */}
             <motion.img
               src={currentPizza.src}
               custom={direction}
@@ -319,59 +330,56 @@ export default function RollingPizzaPage() {
               alt={currentPizza.title}
               fetchPriority="high"
               decoding="async"
-<<<<<<< Updated upstream
               style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
-              className="max-w-[55vw] max-h-[38vh] sm:max-w-[62vw] sm:max-h-[52vh] md:max-w-[68vw] md:max-h-[68vh] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] pointer-events-none z-10 gpu-accelerated"
-=======
-              className="max-w-[50vw] max-h-[32vh] sm:max-w-[60vw] sm:max-h-[48vh] md:max-w-[68vw] md:max-h-[68vh] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] pointer-events-none z-10"
->>>>>>> Stashed changes
+              className="max-w-[72vw] max-h-[42vh] sm:max-w-[62vw] sm:max-h-[46vh] md:max-w-[56vw] md:max-h-[56vh] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] pointer-events-none z-10"
             />
 
-            {/* INGREDIENTS */}
+            {/* INGREDIENTS WITH GPU ACCELERATION */}
             <motion.img
-              initial={{ scale: 0, opacity: 0, rotate: -35 }} animate={{ scale: 1, opacity: 1, rotate: -10 }} exit={{ scale: 0, opacity: 0, rotate: 35 }} 
-              transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
+              initial={{ scale: 0, opacity: 0, rotate: -35 }}
+              animate={{ scale: 1, opacity: 1, rotate: -10, y: [0, -10, 0] }}
+              exit={{ scale: 0, opacity: 0, rotate: 35 }} 
+              transition={{ 
+                scale: { duration: 0.6, ease: [0.34, 1.56, 0.64, 1] },
+                y: { repeat: Infinity, duration: 3.5, ease: "easeInOut" }
+              }}
               src="/onion.png" alt="Fresh Onion" decoding="async"
-<<<<<<< Updated upstream
               style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
-              className="absolute -top-4 -left-6 sm:-top-12 sm:-left-24 md:-top-10 md:-left-36 w-12 sm:w-24 md:w-32 h-12 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none gpu-accelerated"
-=======
-              className="absolute -top-2 -left-4 sm:-top-8 sm:-left-16 md:-top-10 md:-left-36 w-10 sm:w-20 md:w-32 h-10 sm:h-20 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
->>>>>>> Stashed changes
+              className="absolute -top-4 -left-2 sm:-top-12 sm:-left-24 md:-top-10 md:-left-36 w-14 sm:w-24 md:w-32 h-14 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
             />
             <motion.img
-              initial={{ scale: 0, opacity: 0, rotate: 35 }} animate={{ scale: 1, opacity: 1, rotate: 12 }} exit={{ scale: 0, opacity: 0, rotate: -35 }} 
-              transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
+              initial={{ scale: 0, opacity: 0, rotate: 35 }}
+              animate={{ scale: 1, opacity: 1, rotate: 12, y: [0, 12, 0] }}
+              exit={{ scale: 0, opacity: 0, rotate: -35 }} 
+              transition={{ 
+                scale: { duration: 0.6, ease: [0.34, 1.56, 0.64, 1] },
+                y: { repeat: Infinity, duration: 4, ease: "easeInOut" }
+              }}
               src="/garlic.png" alt="Garlic" decoding="async"
-<<<<<<< Updated upstream
               style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
-              className="absolute -top-4 -right-6 sm:-top-12 sm:-right-24 md:-top-10 md:-right-36 w-12 sm:w-24 md:w-32 h-12 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none gpu-accelerated"
-=======
-              className="absolute -top-2 -right-4 sm:-top-8 sm:-right-16 md:-top-10 md:-right-36 w-10 sm:w-20 md:w-32 h-10 sm:h-20 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
->>>>>>> Stashed changes
+              className="absolute -top-4 -right-2 sm:-top-12 sm:-right-24 md:-top-10 md:-right-36 w-14 sm:w-24 md:w-32 h-14 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
             />
             <motion.img
-              initial={{ scale: 0, opacity: 0, rotate: -25 }} animate={{ scale: 1, opacity: 1, rotate: -8 }} exit={{ scale: 0, opacity: 0, rotate: 25 }} 
-              transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
+              initial={{ scale: 0, opacity: 0, rotate: -25 }}
+              animate={{ scale: 1, opacity: 1, rotate: -8, y: [0, -8, 0] }}
+              exit={{ scale: 0, opacity: 0, rotate: 25 }} 
+              transition={{ 
+                scale: { duration: 0.6, ease: [0.34, 1.56, 0.64, 1] },
+                y: { repeat: Infinity, duration: 3.8, ease: "easeInOut" }
+              }}
               src="/paneer.png" alt="Paneer Cubes" decoding="async"
-<<<<<<< Updated upstream
               style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
-              className="absolute -bottom-4 -right-6 sm:-bottom-12 sm:-right-24 md:-bottom-10 md:-right-36 w-12 sm:w-24 md:w-32 h-12 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none gpu-accelerated"
-=======
-              className="absolute -bottom-2 -right-4 sm:-bottom-8 sm:-right-16 md:-bottom-10 md:-right-36 w-10 sm:w-20 md:w-32 h-10 sm:h-20 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
->>>>>>> Stashed changes
+              className="absolute -bottom-2 -right-2 sm:-bottom-12 sm:-right-24 md:-bottom-10 md:-right-36 w-12 sm:w-24 md:w-32 h-12 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
             />
           </div>
         </AnimatePresence>
 
-<<<<<<< Updated upstream
-=======
-        {/* MOBILE & TABLET ARROW BUTTONS (Placed nicely underneath the pizza area) */}
-        <div className="flex md:hidden items-center gap-6 mt-6 z-30">
+        {/* MOBILE & TABLET ARROW BUTTONS */}
+        <div className="flex md:hidden items-center gap-8 mt-4 sm:mt-5 z-30">
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => paginate(-1)}
-            className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg active:scale-95 cursor-pointer"
+            className="w-11 h-11 rounded-full bg-black/70 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg active:scale-95 cursor-pointer"
             aria-label="Previous Pizza"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -379,28 +387,60 @@ export default function RollingPizzaPage() {
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => paginate(1)}
-            className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg active:scale-95 cursor-pointer"
+            className="w-11 h-11 rounded-full bg-black/70 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg active:scale-95 cursor-pointer"
             aria-label="Next Pizza"
           >
             <ChevronRight className="w-6 h-6" />
           </motion.button>
         </div>
 
->>>>>>> Stashed changes
       </div>
 
-      {/* BOTTOM LEFT DESCRIPTION */}
-      <div className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 md:bottom-10 md:left-10 z-30 max-w-[200px] sm:max-w-xs md:max-w-md pointer-events-none bg-black/50 p-3.5 sm:p-4 rounded-xl backdrop-blur-md border border-white/10 shadow-2xl">
-        <AnimatePresence mode="wait">
-          <motion.div key={page} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.4 }}>
-            <h3 className="text-[11px] sm:text-sm md:text-base font-bold text-white tracking-[0.2em] uppercase mb-1">
-              {currentPizza.title}
-            </h3>
-            <p className="text-[10px] sm:text-xs md:text-sm text-neutral-300 font-medium leading-relaxed">
-              {currentPizza.desc}
-            </p>
-          </motion.div>
-        </AnimatePresence>
+      {/* BOTTOM SECTION */}
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 z-30 pb-20 pt-2 md:pt-6">
+        <div className="w-full">
+          <h2 className="text-xs sm:text-sm md:text-2xl font-extrabold text-white tracking-wide mb-3 sm:mb-4 md:mb-6 text-left drop-shadow-md">
+            What do you wanna eat ?
+          </h2>
+          
+          {/* Mobile Grid */}
+          <div className="grid grid-cols-3 gap-3 md:hidden">
+            {categories.map((cat, idx) => (
+              <Link
+                key={idx}
+                href="/order"
+                className="group flex flex-col items-center p-2 rounded-2xl transition-all duration-300 cursor-pointer"
+              >
+                <div className="relative w-20 h-20 sm:w-28 sm:h-28 flex items-center justify-center mb-1 group-hover:scale-110 transition-transform duration-300">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={cat.img} alt={cat.name} className="w-full h-full object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)]" />
+                </div>
+                <span className="text-[10px] sm:text-xs font-bold text-white text-center group-hover:text-[#FF5500] transition-colors leading-tight drop-shadow-md">
+                  {cat.name}
+                </span>
+              </Link>
+            ))}
+          </div>
+
+          {/* PC Large Horizontal Row */}
+          <div className="hidden md:flex flex-row items-center justify-between gap-6 w-full">
+            {categories.map((cat, idx) => (
+              <Link
+                key={idx}
+                href="/order"
+                className="group flex flex-col items-center p-2 rounded-xl transition-all duration-300 cursor-pointer flex-1"
+              >
+                <div className="relative w-24 h-24 xl:w-28 xl:h-28 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={cat.img} alt={cat.name} className="w-full h-full object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.9)]" />
+                </div>
+                <span className="text-xs xl:text-sm font-bold text-white text-center group-hover:text-[#FF5500] transition-colors leading-tight drop-shadow-md whitespace-nowrap">
+                  {cat.name}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* ABOUT US MODAL */}
