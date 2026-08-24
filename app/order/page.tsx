@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, ArrowLeft, Plus, Check, Sparkles, X, Trash2 } from "lucide-react";
+import PizzaLoader from "../components/PizzaLoader";
 
 export default function LazizMenuOrderPage() {
   const [selectedSizes, setSelectedSizes] = useState<{ [key: number]: "S" | "M" | "L" }>({
@@ -108,11 +109,14 @@ export default function LazizMenuOrderPage() {
   const cartTotal = cart.reduce((sum, item) => sum + item.price, 0);
 
   return (
-    <div className="min-h-screen w-full bg-[#5C0F15] text-[#2A1012] relative font-body selection:bg-[#FF5500] selection:text-white pb-24 overflow-x-hidden">
+    <div className="min-h-screen min-h-[100dvh] w-full max-w-full bg-[#5C0F15] text-[#2A1012] relative font-body selection:bg-[#FF5500] selection:text-white pb-24 overflow-x-hidden">
+      
+      {/* BAKING PIZZA LOADER */}
+      <PizzaLoader minDuration={800} />
 
       {/* RICH BURGUNDY BACKGROUND TEXTURE */}
       <div
-        className="absolute inset-0 opacity-40 mix-blend-overlay bg-cover bg-center pointer-events-none fixed"
+        className="absolute inset-0 opacity-40 mix-blend-overlay bg-cover bg-center pointer-events-none"
         style={{ backgroundImage: `url('/menu_bg.jpg')` }}
       />
 

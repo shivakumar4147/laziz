@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, X, Award, Store, Users, Sparkles, Menu } from "lucide-react";
+import PizzaLoader from "./components/PizzaLoader";
 
 // Static data definitions hoisted outside component to prevent re-creation on render ticks
 const PIZZAS = [
@@ -56,7 +57,7 @@ const CATEGORIES = [
 
 const IMAGE_VARIANTS = {
   enter: (direction: number) => ({
-    x: direction > 0 ? 500 : -500,
+    x: direction > 0 ? 320 : -320,
     rotate: direction > 0 ? 180 : -180,
     opacity: 0,
     scale: 0.8,
@@ -68,7 +69,7 @@ const IMAGE_VARIANTS = {
     scale: 1,
   },
   exit: (direction: number) => ({
-    x: direction < 0 ? 500 : -500,
+    x: direction < 0 ? 320 : -320,
     rotate: direction < 0 ? 180 : -180,
     opacity: 0,
     scale: 0.8,
@@ -114,7 +115,10 @@ export default function RollingPizzaPage() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-[radial-gradient(circle_at_center,_#6e1315_0%,_#1a0303_75%,_#000000_100%)] flex flex-col items-center justify-between overflow-x-hidden relative select-none">
+    <div className="w-full max-w-full min-h-screen min-h-[100dvh] bg-[radial-gradient(circle_at_center,_#6e1315_0%,_#1a0303_75%,_#000000_100%)] flex flex-col items-center justify-between overflow-hidden relative select-none">
+      
+      {/* BAKING PIZZA ANIMATED LOADER */}
+      <PizzaLoader minDuration={1000} />
 
       {/* BACKGROUND (ALL WHITE TEXT FOR VISIBILITY) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
@@ -270,7 +274,7 @@ export default function RollingPizzaPage() {
       </AnimatePresence>
 
       {/* Animated Rolling Pizza & Ingredients Canvas */}
-      <div className="relative w-full flex flex-col items-center justify-center z-10 px-4 pt-32 sm:pt-36 md:pt-28 pb-4 md:pb-12 min-h-[460px] sm:min-h-[520px] md:min-h-[580px]">
+      <div className="relative w-full max-w-full overflow-hidden flex flex-col items-center justify-center z-10 px-4 pt-32 sm:pt-36 md:pt-28 pb-4 md:pb-12 min-h-[460px] sm:min-h-[520px] md:min-h-[580px]">
 
         {/* DESKTOP GLOWING ARROW BUTTONS */}
         <motion.button
@@ -293,8 +297,8 @@ export default function RollingPizzaPage() {
           <ChevronRight className="w-7 h-7 transition-transform group-hover:translate-x-1" />
         </motion.button>
 
-        <AnimatePresence initial={false} custom={direction} mode="wait">
-          <div key={page} className="relative flex flex-col items-center justify-center">
+        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+          <div key={page} className="relative w-[270px] h-[270px] sm:w-[350px] sm:h-[350px] md:w-[440px] md:h-[440px] flex items-center justify-center shrink-0 aspect-square">
 
             {/* CIRCULAR TEXT RING */}
             <motion.div
@@ -303,12 +307,11 @@ export default function RollingPizzaPage() {
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               exit={{ opacity: 0, scale: 0.85, rotate: direction < 0 ? 180 : -180 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
               className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 scale-[0.85] sm:scale-95 md:scale-90"
             >
               <svg viewBox="0 0 400 400" className="w-[125%] h-[125%] overflow-visible">
                 <defs>
-                  <path id={`segmentPath-${page}`} d="M 200,30 A 170,170 0 0,1 370,200" fill="none" />
+                  <path id={`segmentPath-${page}-${currentIndex}`} d="M 200,30 A 170,170 0 0,1 370,200" fill="none" />
                 </defs>
                 {SEGMENTS.map((_, i) => {
                   const angle = (i * 360) / TOTAL_SEGMENTS;
@@ -319,7 +322,7 @@ export default function RollingPizzaPage() {
                         textLength="165"
                         lengthAdjust="spacingAndGlyphs"
                       >
-                        <textPath href={`#segmentPath-${page}`} startOffset="0%">
+                        <textPath href={`#segmentPath-${page}-${currentIndex}`} startOffset="0%">
                           {`${currentPizza.name}  ★  `}
                         </textPath>
                       </text>
@@ -353,8 +356,7 @@ export default function RollingPizzaPage() {
                   paginate(-1);
                 }
               }}
-              style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
-              className="max-w-[75vw] max-h-[44vh] sm:max-w-[62vw] sm:max-h-[46vh] md:max-w-[56vw] md:max-h-[56vh] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] pointer-events-auto cursor-grab active:cursor-grabbing z-10 touch-pan-y"
+              className="w-full h-full object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] pointer-events-auto cursor-grab active:cursor-grabbing z-10 touch-pan-y select-none"
             />
 
             {/* INGREDIENTS WITH GPU ACCELERATION */}
@@ -367,7 +369,6 @@ export default function RollingPizzaPage() {
                 y: { repeat: Infinity, duration: 3.5, ease: "easeInOut" }
               }}
               src="/onion.webp" alt="Fresh Onion" decoding="async"
-              style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
               className="absolute -top-4 -left-2 sm:-top-12 sm:-left-24 md:-top-10 md:-left-36 w-14 sm:w-24 md:w-32 h-14 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
             />
             <motion.img
@@ -379,7 +380,6 @@ export default function RollingPizzaPage() {
                 y: { repeat: Infinity, duration: 4, ease: "easeInOut" }
               }}
               src="/garlic.webp" alt="Garlic" decoding="async"
-              style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
               className="absolute -top-4 -right-2 sm:-top-12 sm:-right-24 md:-top-10 md:-right-36 w-14 sm:w-24 md:w-32 h-14 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
             />
             <motion.img
@@ -391,7 +391,6 @@ export default function RollingPizzaPage() {
                 y: { repeat: Infinity, duration: 3.8, ease: "easeInOut" }
               }}
               src="/paneer.webp" alt="Paneer Cubes" decoding="async"
-              style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
               className="absolute -bottom-2 -right-2 sm:-bottom-12 sm:-right-24 md:-bottom-10 md:-right-36 w-12 sm:w-24 md:w-32 h-12 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
             />
           </div>
