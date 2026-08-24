@@ -258,8 +258,8 @@ export default function RollingPizzaPage() {
         )}
       </AnimatePresence>
 
-      {/* Animated Rolling Pizza & Ingredients Canvas */}
-      <div className="relative w-full flex flex-col items-center justify-center z-10 px-4 pt-32 sm:pt-36 md:pt-28 pb-4 md:pb-12">
+      {/* Animated Rolling Pizza & Ingredients Canvas (Added min-h wrapper to prevent vertical jump) */}
+      <div className="relative w-full flex flex-col items-center justify-center z-10 px-4 pt-32 sm:pt-36 md:pt-28 pb-4 md:pb-12 min-h-[460px] sm:min-h-[520px] md:min-h-[580px]">
         
         {/* DESKTOP GLOWING ARROW BUTTONS */}
         <motion.button
