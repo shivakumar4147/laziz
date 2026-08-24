@@ -23,13 +23,13 @@ export default function LazizMenuOrderPage() {
 
   useEffect(() => {
     const imagesToPreload = [
-      "/1.png",
-      "/2.png",
-      "/3.png",
-      "/4.png",
-      "/5.png",
-      "/6.png",
-      "/image.png",
+      "/1.webp",
+      "/2.webp",
+      "/3.webp",
+      "/4.webp",
+      "/5.webp",
+      "/6.webp",
+      "/image.webp",
       "/menu_bg.jpg",
     ];
     imagesToPreload.forEach((src) => {
@@ -43,42 +43,42 @@ export default function LazizMenuOrderPage() {
       id: 1,
       title: "BBQ Meat Pizza",
       desc: "Spicy grilled barbecue meat, melted mozzarella cheese pull, and signature rich tomato sauce.",
-      img: "/1.png",
+      img: "/1.webp",
       prices: { S: 199, M: 299, L: 399 },
     },
     {
       id: 2,
       title: "Veggie Delight Pizza",
       desc: "Harmonious mix of bell peppers, onions, mushrooms, olives, and fresh tomatoes over creamy mozzarella.",
-      img: "/3.png",
+      img: "/3.webp",
       prices: { S: 199, M: 299, L: 399 },
     },
     {
       id: 3,
       title: "Margherita Pizza",
       desc: "Italian classic with fresh cherry tomatoes, basil leaves, and melted mozzarella cheese.",
-      img: "/2.png",
+      img: "/2.webp",
       prices: { S: 199, M: 299, L: 399 },
     },
     {
       id: 4,
       title: "Supreme Pizza",
       desc: "Rich combination of pepperoni, sausage, ham, olives, and fresh vegetables for maximum flavor.",
-      img: "/5.png",
+      img: "/5.webp",
       prices: { S: 229, M: 329, L: 429 },
     },
     {
       id: 5,
       title: "Cheese Lover Pizza",
       desc: "Extra thick stretchy mozzarella cheese pull on a golden buttery wood-fired crust.",
-      img: "/4.png",
+      img: "/4.webp",
       prices: { S: 229, M: 329, L: 429 },
     },
     {
       id: 6,
       title: "Seafood Pizza",
       desc: "Fresh ocean seafood, sweet pineapple, ham, melted cheese, and tomato sauce blend.",
-      img: "/6.png",
+      img: "/6.webp",
       prices: { S: 229, M: 329, L: 429 },
     },
   ]);
@@ -108,7 +108,7 @@ export default function LazizMenuOrderPage() {
   const cartTotal = cart.reduce((sum, item) => sum + item.price, 0);
 
   return (
-    <div className="min-h-screen bg-[#5C0F15] text-[#2A1012] relative font-body selection:bg-[#FF5500] selection:text-white pb-24 overflow-y-auto">
+    <div className="min-h-screen w-full bg-[#5C0F15] text-[#2A1012] relative font-body selection:bg-[#FF5500] selection:text-white pb-24 overflow-x-hidden">
 
       {/* RICH BURGUNDY BACKGROUND TEXTURE */}
       <div
@@ -145,7 +145,7 @@ export default function LazizMenuOrderPage() {
           </Link>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/image.png"
+            src="/image.webp"
             alt="Laziz Pizza Logo"
             className="h-10 sm:h-14 w-auto object-contain cursor-pointer"
           />
@@ -181,7 +181,7 @@ export default function LazizMenuOrderPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="bebas-text text-7xl sm:text-9xl md:text-[140px] font-black text-[#FFF8ED] tracking-wider uppercase drop-shadow-[0_8px_20px_rgba(0,0,0,0.8)]"
+          className="bebas-text text-6xl sm:text-9xl md:text-[140px] font-black text-[#FFF8ED] tracking-wider uppercase drop-shadow-[0_8px_20px_rgba(0,0,0,0.8)]"
           style={{ textShadow: "4px 4px 0px #2A0508, 8px 8px 15px rgba(0,0,0,0.9)" }}
         >
           MENU
@@ -229,9 +229,8 @@ export default function LazizMenuOrderPage() {
                       fill
                       priority={item.id <= 3}
                       onLoad={() => setLoadedImages((prev) => ({ ...prev, [item.id]: true }))}
-                      className={`object-contain drop-shadow-2xl hover:scale-105 transition-all duration-500 ease-out ${
-                        loadedImages[item.id] ? "opacity-100 scale-100" : "opacity-0 scale-95"
-                      }`}
+                      className={`object-contain drop-shadow-2xl hover:scale-105 transition-all duration-500 ease-out ${loadedImages[item.id] ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                        }`}
                     />
                   </div>
 
@@ -246,8 +245,8 @@ export default function LazizMenuOrderPage() {
                             key={sz}
                             onClick={() => setSize(item.id, sz)}
                             className={`w-9 h-9 rounded-xl text-xs font-bold transition-all ${currentSize === sz
-                                ? "bg-[#5C0F15] text-white shadow-md scale-105"
-                                : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
+                              ? "bg-[#5C0F15] text-white shadow-md scale-105"
+                              : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
                               }`}
                           >
                             {sz}
@@ -286,13 +285,20 @@ export default function LazizMenuOrderPage() {
       {/* CART DRAWER MODAL WITH REMOVE BUTTONS */}
       <AnimatePresence>
         {isCartOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/80 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-end">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsCartOpen(false)}
+              className="fixed inset-0 bg-black/80 backdrop-blur-md z-0"
+            />
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="bg-[#FFF9F3] w-full max-w-md h-full p-6 flex flex-col justify-between shadow-2xl relative"
+              transition={{ type: "spring", stiffness: 320, damping: 32 }}
+              className="bg-[#FFF9F3] w-full max-w-md h-full p-6 flex flex-col justify-between shadow-2xl relative z-10"
             >
               {/* Cart Header */}
               <div>

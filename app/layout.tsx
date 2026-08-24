@@ -6,17 +6,20 @@ const bebasNeue = Bebas_Neue({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-bebas",
+  display: "swap",
 });
 
 const permanentMarker = Permanent_Marker({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-permanent",
+  display: "swap",
 });
 
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
