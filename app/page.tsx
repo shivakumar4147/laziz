@@ -83,86 +83,7 @@ export default function RollingPizzaPage() {
   const segments = Array.from({ length: totalSegments });
 
   return (
-    <div className="w-screen h-screen bg-[radial-gradient(circle_at_center,_#6e1315_0%,_#1a0303_75%,_#000000_100%)] flex flex-col items-center justify-between overflow-hidden relative select-none">
-      
-      {/* BACKGROUND (ALL WHITE TEXT FOR VISIBILITY) */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        
-        {/* --- EXTREME LEFT COLUMN --- */}
-        <div className="absolute top-[18%] left-[2%] md:left-[3%] transform -rotate-12">
-          <p className="graffiti-text text-white/20 text-2xl xl:text-3xl max-w-[200px] leading-tight">I LOVE THE SHAPE OF YOU</p>
-        </div>
-
-        <div className="absolute top-[42%] left-[2%] md:left-[3%] transform -rotate-6">
-          <svg width="160" height="160" viewBox="0 0 100 100" className="absolute -top-6 -left-6 text-white/20" fill="none" stroke="currentColor" strokeWidth="1.5">
-             <circle cx="50" cy="50" r="45" strokeDasharray="6 4"/>
-             <circle cx="50" cy="50" r="40" strokeDasharray="2 6"/>
-          </svg>
-          <p className="graffiti-text text-white/20 text-lg xl:text-xl text-center w-28 leading-snug">BUY ME PIZZA & TELL ME I AM PRETTY</p>
-        </div>
-
-        <div className="absolute bottom-[25%] left-[2%] md:left-[3%] transform -rotate-3">
-           <p className="graffiti-text text-white/20 text-xl xl:text-2xl max-w-[220px] leading-tight">THE PERSON YOU LOVE<br/>IS 72.8% PIZZA.</p>
-        </div>
-
-        {/* --- EXTREME RIGHT COLUMN --- */}
-        <div className="absolute top-[15%] right-[2%] md:right-[3%] transform rotate-6">
-           <p className="graffiti-text text-white/20 text-lg xl:text-xl text-right max-w-[180px] leading-tight">YOU ARE WHAT YOU EAT... SO I AM PIZZA.</p>
-        </div>
-
-        <div className="absolute top-[32%] right-[2%] md:right-[3%] transform rotate-12">
-           <p className="graffiti-text text-white/20 text-4xl xl:text-5xl leading-[0.85] text-right">SLICE<br/>SLICE<br/>BABY</p>
-        </div>
-
-        <div className="absolute top-[55%] right-[2%] md:right-[3%] transform -rotate-6">
-           <p className="graffiti-text text-white/20 text-2xl xl:text-3xl whitespace-nowrap">PIZZA At Its Best</p>
-        </div>
-
-        {/* Red Badge */}
-        <div className="absolute bottom-[22%] right-[2%] md:right-[3%] transform -rotate-12 drop-shadow-2xl">
-           <div className="bg-[#cc1111]/90 rounded-full w-28 h-28 xl:w-32 xl:h-32 flex items-center justify-center p-2 border-2 border-white/40 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-              <p className="graffiti-text text-white/90 text-center text-sm xl:text-base leading-tight">Don't<br/>Worry<br/><span className="text-xl xl:text-2xl">PIZZA</span><br/>is Coming</p>
-           </div>
-        </div>
-
-        <div className="absolute bottom-[8%] right-[4%] md:right-[5%] transform rotate-3">
-           <p className="graffiti-text text-white/20 text-2xl xl:text-3xl whitespace-nowrap">It's Laziz PIZZA DAY</p>
-        </div>
-
-        {/* --- SUBTLE ARCHITECTURAL SKETCHES --- */}
-        <svg className="absolute bottom-[8%] left-[2%] md:left-[4%] w-24 h-24 xl:w-32 xl:h-32 opacity-20 text-white transform -rotate-6" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M10,80 Q50,90 90,80 L85,40 Q50,30 15,40 Z" />
-            <path d="M15,60 Q50,70 85,60" />
-            <path d="M20,40 L20,82 M40,35 L40,86 M60,35 L60,86 M80,40 L80,82" strokeDasharray="3 3"/>
-        </svg>
-
-        <svg className="absolute top-[70%] right-[15%] w-16 h-32 xl:w-20 xl:h-40 opacity-20 text-white transform rotate-[15deg]" viewBox="0 0 100 200" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <rect x="30" y="20" width="40" height="160" rx="3" />
-            <line x1="25" y1="40" x2="75" y2="40" />
-            <line x1="25" y1="65" x2="75" y2="65" />
-            <line x1="25" y1="90" x2="75" y2="90" />
-            <line x1="25" y1="115" x2="75" y2="115" />
-            <line x1="25" y1="140" x2="75" y2="140" />
-            <line x1="25" y1="165" x2="75" y2="165" />
-            <line x1="40" y1="20" x2="40" y2="180" strokeDasharray="3 4" />
-            <line x1="50" y1="20" x2="50" y2="180" strokeDasharray="3 4" />
-            <line x1="60" y1="20" x2="60" y2="180" strokeDasharray="3 4" />
-        </svg>
-
-        {/* --- SCATTERED PIZZA SLICES --- */}
-        <svg className="absolute top-[60%] left-[16%] w-16 h-16 opacity-20 text-white transform rotate-[45deg]" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M50,10 L90,80 Q50,95 10,80 Z" />
-          <circle cx="50" cy="40" r="5" fill="currentColor"/>
-          <circle cx="40" cy="65" r="4" fill="currentColor"/>
-          <circle cx="65" cy="70" r="6" fill="currentColor"/>
-        </svg>
-
-        <svg className="absolute top-[20%] right-[22%] w-12 h-12 opacity-20 text-white transform rotate-[110deg]" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M50,10 L90,80 Q50,95 10,80 Z" />
-          <circle cx="45" cy="45" r="4" fill="currentColor"/>
-          <circle cx="55" cy="65" r="5" fill="currentColor"/>
-        </svg>
-      </div>
+    <div className="w-screen h-screen bg-[#070707] flex flex-col items-center justify-between overflow-hidden relative select-none">
 
       {/* TOP LEFT CORNER BRANDING IMAGE */}
       <div className="fixed top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 z-40 pointer-events-auto">
@@ -186,7 +107,6 @@ export default function RollingPizzaPage() {
             {item}
           </button>
         ))}
-        {/* Connected Order Link */}
         <Link
           href="/order"
           className="px-5 py-2 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#6e1315] bg-white hover:bg-neutral-200 rounded-full transition-all cursor-pointer shadow-xl active:scale-95 border-2 border-white inline-block text-center"
@@ -256,37 +176,20 @@ export default function RollingPizzaPage() {
 
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <div key={page} className="relative flex flex-col items-center justify-center">
-            
-            {/* PERFECTLY EVEN BALANCED CIRCULAR TEXT LOOP */}
-            <motion.div 
-              custom={direction}
-              initial={{ opacity: 0, scale: 0.85, rotate: direction > 0 ? 180 : -180 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              exit={{ opacity: 0, scale: 0.85, rotate: direction < 0 ? 180 : -180 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 scale-100 sm:scale-95 md:scale-90"
-            >
-              <svg viewBox="0 0 400 400" className="w-[125%] h-[125%] overflow-visible">
-                <defs>
-                  {/* Clean arc path for each segment */}
-                  <path id={`segmentPath-${page}`} d="M 200,30 A 170,170 0 0,1 370,200" fill="none" />
-                </defs>
-                {segments.map((_, i) => {
-                  const angle = (i * 360) / totalSegments;
-                  return (
-                    <g key={i} transform={`rotate(${angle} 200 200)`}>
-                      <text 
-                        className="fill-white bebas-text font-black uppercase drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] text-[15px] sm:text-[19px] md:text-[23px]"
-                        textLength="165"
-                        lengthAdjust="spacingAndGlyphs"
-                      >
-                        <textPath href={`#segmentPath-${page}`} startOffset="0%">
-                          {`${currentPizza.name}  ★  `}
-                        </textPath>
-                      </text>
-                    </g>
-                  );
-                })}
+
+            {/* CIRCULAR TEXT RING WRAPPED AROUND PIZZA */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-15 scale-125 sm:scale-115 md:scale-105">
+              <svg viewBox="0 0 400 400" className="w-[115%] h-[115%] overflow-visible">
+                <path
+                  id={`pizzaCirclePath-${page}`}
+                  d="M 200, 200 m -165, 0 a 165,165 0 1,1 330,0 a 165,165 0 1,1 -330,0"
+                  fill="none"
+                />
+                <text className="fill-white/90 text-[11px] sm:text-[13px] md:text-[14px] bebas-text tracking-[0.35em] font-bold uppercase drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+                  <textPath href={`#pizzaCirclePath-${page}`} startOffset="0%">
+                    {`${currentPizza.name} Pizza  ★  Laziz Special  ★  ${currentPizza.name} Pizza  ★  Fresh & Hot  ★  `}
+                  </textPath>
+                </text>
               </svg>
             </motion.div>
 
@@ -342,13 +245,35 @@ export default function RollingPizzaPage() {
         </AnimatePresence>
       </div>
 
-      {/* ABOUT US MODAL */}
+      {/* TWO ARROW BUTTONS AT BOTTOM RIGHT CORNER */}
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 z-30 flex items-center gap-2 sm:gap-3">
+        <button
+          onClick={() => paginate(-1)}
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-neutral-900/90 border border-neutral-700/80 text-white hover:bg-[#FF5500] hover:text-white hover:border-[#FF5500] flex items-center justify-center transition-all duration-200 shadow-xl cursor-pointer active:scale-95"
+          aria-label="Previous Pizza"
+        >
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
+
+        <button
+          onClick={() => paginate(1)}
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-neutral-900/90 border border-neutral-700/80 text-white hover:bg-[#FF5500] hover:text-white hover:border-[#FF5500] flex items-center justify-center transition-all duration-200 shadow-xl cursor-pointer active:scale-95"
+          aria-label="Next Pizza"
+        >
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
+      </div>
+
+      {/* ABOUT US MODAL OVERLAY */}
       <AnimatePresence>
         {isAboutOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-lg">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} transition={{ duration: 0.3 }}
-              className="bg-[#0F0F0F] border border-neutral-800 rounded-3xl max-w-2xl w-full p-5 sm:p-8 max-h-[88vh] overflow-y-auto relative text-white shadow-2xl custom-scrollbar"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.3 }}
+              className="card-dark-texture border border-neutral-800 rounded-3xl max-w-2xl w-full p-5 sm:p-8 max-h-[88vh] overflow-y-auto relative text-white shadow-2xl custom-scrollbar"
             >
               <button onClick={() => setIsAboutOpen(false)} className="absolute top-4 right-4 sm:top-5 sm:right-5 text-neutral-400 hover:text-white p-2 rounded-full bg-neutral-900 border border-neutral-800 transition-colors cursor-pointer">
                 <X className="w-5 h-5" />
@@ -358,7 +283,12 @@ export default function RollingPizzaPage() {
                 <h2 className="bebas-text text-3xl sm:text-5xl font-extrabold tracking-wider text-white">ABOUT US</h2>
               </div>
               <div className="space-y-5 sm:space-y-6 text-xs sm:text-sm text-neutral-300 font-normal leading-relaxed">
-                <p>We are proud to introduce ourselves as <strong className="text-white">Laziz Pizza™</strong> brand run by Laziz Food & Beverages based at Kolhapur, Western Maharashtra. Founded on <strong className="text-[#FF5500]">15th August 2013</strong>.</p>
+
+                <p>
+                  We are proud to introduce ourselves as <strong className="text-white">Laziz Pizza™</strong> brand run by Laziz Food & Beverages based at Kolhapur, Western Maharashtra. Founded on <strong className="text-[#FF5500]">15th August 2013</strong>. Laziz Pizza™ is known for its Taste & Variety of Pizza. Laziz Pizza has a wide product portfolio of pizza to savor customers taste buds.
+                </p>
+
+                {/* Highlight Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-1">
                   <div className="bg-neutral-900/80 border border-neutral-800 p-3.5 sm:p-4 rounded-2xl flex items-start gap-3">
                     <Store className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF5500] shrink-0 mt-1" />

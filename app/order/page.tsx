@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag, ArrowLeft, Plus, Check, Sparkles, X } from "lucide-react";
+import { ShoppingBag, ArrowLeft, Plus, Check, Sparkles, X, Trash2 } from "lucide-react";
 
 export default function LazizMenuOrderPage() {
   const [selectedSizes, setSelectedSizes] = useState<{ [key: number]: "S" | "M" | "L" }>({
@@ -20,7 +20,7 @@ export default function LazizMenuOrderPage() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
 
-  const menuItems = [
+  const [menuItems, setMenuItems] = useState([
     {
       id: 1,
       title: "BBQ Meat Pizza",
@@ -63,7 +63,7 @@ export default function LazizMenuOrderPage() {
       img: "/6.png",
       prices: { S: 229, M: 329, L: 429 },
     },
-  ];
+  ]);
 
   const setSize = (id: number, size: "S" | "M" | "L") => {
     setSelectedSizes((prev) => ({ ...prev, [id]: size }));
@@ -77,13 +77,23 @@ export default function LazizMenuOrderPage() {
     setTimeout(() => setNotification(null), 3000);
   };
 
+  const removeFromCart = (indexToRemove: number) => {
+    setCart((prev) => prev.filter((_, idx) => idx !== indexToRemove));
+  };
+
+  const deleteMenuItem = (id: number, title: string) => {
+    setMenuItems((prev) => prev.filter((item) => item.id !== id));
+    setNotification(`Removed ${title} from menu`);
+    setTimeout(() => setNotification(null), 3000);
+  };
+
   const cartTotal = cart.reduce((sum, item) => sum + item.price, 0);
 
   return (
     <div className="min-h-screen bg-[#5C0F15] text-[#2A1012] relative font-body selection:bg-[#FF5500] selection:text-white pb-24 overflow-y-auto">
-      
+
       {/* RICH BURGUNDY BACKGROUND TEXTURE */}
-      <div 
+      <div
         className="absolute inset-0 opacity-40 mix-blend-overlay bg-cover bg-center pointer-events-none fixed"
         style={{ backgroundImage: `url('/menu_bg.jpg')` }}
       />
@@ -105,7 +115,7 @@ export default function LazizMenuOrderPage() {
 
       {/* HEADER SECTION */}
       <header className="relative z-30 max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-        
+
         {/* Left: Logo & Back Button */}
         <div className="flex items-center gap-4">
           <Link
@@ -160,91 +170,98 @@ export default function LazizMenuOrderPage() {
         </motion.h1>
       </div>
 
-      {/* MENU GRID CARDS SECTION (MATCHING SCREENSHOT LAYOUT) */}
+      {/* MENU GRID CARDS SECTION */}
       <main className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {menuItems.map((item) => {
-            const currentSize = selectedSizes[item.id] || "S";
-            const price = item.prices[currentSize];
+        <AnimatePresence>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {menuItems.map((item) => {
+              const currentSize = selectedSizes[item.id] || "S";
+              const price = item.prices[currentSize];
 
-            return (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: item.id * 0.1 }}
-                className="bg-[#FFF9F3] rounded-[32px] p-6 sm:p-7 shadow-2xl flex flex-col justify-between relative border border-white/40 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] transition-all duration-300"
-              >
-                {/* Top Details */}
-                <div>
-                  <h3 className="bebas-text text-3xl sm:text-4xl font-extrabold text-[#2A1012] tracking-wide mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-neutral-600 font-medium leading-relaxed mb-4 min-h-[44px]">
-                    {item.desc}
-                  </p>
-                </div>
+              return (
+                <motion.div
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.4 }}
+                  className="card-texture rounded-[32px] p-6 sm:p-7 shadow-2xl flex flex-col justify-between relative border border-[#E8DCCB] hover:shadow-[0_25px_50px_rgba(0,0,0,0.6)] transition-all duration-300 group overflow-hidden"
+                >
+                  {/* Inner Dashed Card Border Frame & Glow */}
+                  <div className="absolute inset-3 rounded-[22px] border border-dashed border-[#D5C2AF]/60 pointer-events-none z-0" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-black/5 pointer-events-none rounded-[32px]" />
 
-                {/* Central Wood Platter Pizza Visual */}
-                <div className="relative w-full h-44 sm:h-52 my-3 flex items-center justify-center">
-                  <div className="absolute inset-x-4 bottom-2 h-8 bg-black/20 rounded-full blur-md" />
-                  <Image
-                    src={item.img}
-                    alt={item.title}
-                    fill
-                    className="object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
+                  {/* Top Details */}
+                  <div className="relative z-10">
+                    <h3 className="bebas-text text-3xl sm:text-4xl font-extrabold text-[#2A1012] tracking-wide mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-neutral-600 font-medium leading-relaxed mb-4 min-h-[44px]">
+                      {item.desc}
+                    </p>
+                  </div>
 
-                {/* Pricing & Size Selection */}
-                <div className="mt-4 pt-4 border-t border-neutral-200">
-                  <div className="flex items-center justify-between mb-4">
-                    
-                    {/* Size Options */}
-                    <div className="flex items-center gap-2">
-                      {(["S", "M", "L"] as const).map((sz) => (
-                        <button
-                          key={sz}
-                          onClick={() => setSize(item.id, sz)}
-                          className={`w-9 h-9 rounded-xl text-xs font-bold transition-all ${
-                            currentSize === sz
-                              ? "bg-[#5C0F15] text-white shadow-md scale-105"
-                              : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
-                          }`}
-                        >
-                          {sz}
-                        </button>
-                      ))}
+                  {/* Central Wood Platter Pizza Visual */}
+                  <div className="relative w-full h-44 sm:h-52 my-3 flex items-center justify-center">
+                    <div className="absolute inset-x-4 bottom-2 h-8 bg-black/20 rounded-full blur-md" />
+                    <Image
+                      src={item.img}
+                      alt={item.title}
+                      fill
+                      className="object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+
+                  {/* Pricing & Size Selection */}
+                  <div className="relative z-10 mt-4 pt-4 border-t border-neutral-200/80">
+                    <div className="flex items-center justify-between mb-4">
+
+                      {/* Size Options */}
+                      <div className="flex items-center gap-2">
+                        {(["S", "M", "L"] as const).map((sz) => (
+                          <button
+                            key={sz}
+                            onClick={() => setSize(item.id, sz)}
+                            className={`w-9 h-9 rounded-xl text-xs font-bold transition-all ${currentSize === sz
+                                ? "bg-[#5C0F15] text-white shadow-md scale-105"
+                                : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
+                              }`}
+                          >
+                            {sz}
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Price Tag */}
+                      <div className="text-right">
+                        <span className="text-xs text-neutral-500 font-semibold block uppercase">Price</span>
+                        <span className="bebas-text text-3xl font-extrabold text-[#5C0F15]">
+                          ₹{price}
+                        </span>
+                      </div>
+
                     </div>
 
-                    {/* Price Tag */}
-                    <div className="text-right">
-                      <span className="text-xs text-neutral-500 font-semibold block uppercase">Price</span>
-                      <span className="bebas-text text-3xl font-extrabold text-[#5C0F15]">
-                        ₹{price}
-                      </span>
-                    </div>
+                    {/* Add to Cart Button */}
+                    <button
+                      onClick={() => addToCart(item)}
+                      className="w-full py-3 bg-[#5C0F15] hover:bg-[#FF5500] text-white font-extrabold bebas-text text-xl tracking-wider rounded-2xl transition-colors duration-300 flex items-center justify-center gap-2 shadow-lg active:scale-98"
+                    >
+                      <Plus className="w-5 h-5" />
+                      <span>ADD TO ORDER • ₹{price}</span>
+                    </button>
 
                   </div>
 
-                  {/* Add to Cart Button */}
-                  <button
-                    onClick={() => addToCart(item)}
-                    className="w-full py-3 bg-[#5C0F15] hover:bg-[#FF5500] text-white font-extrabold bebas-text text-xl tracking-wider rounded-2xl transition-colors duration-300 flex items-center justify-center gap-2 shadow-lg active:scale-98"
-                  >
-                    <Plus className="w-5 h-5" />
-                    <span>ADD TO ORDER • ₹{price}</span>
-                  </button>
-
-                </div>
-
-              </motion.div>
-            );
-          })}
-        </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </AnimatePresence>
       </main>
 
-      {/* CART DRAWER MODAL */}
+      {/* CART DRAWER MODAL WITH REMOVE BUTTONS */}
       <AnimatePresence>
         {isCartOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/80 backdrop-blur-md">
@@ -295,9 +312,21 @@ export default function LazizMenuOrderPage() {
                             </span>
                           </div>
                         </div>
-                        <span className="bebas-text text-2xl font-bold text-[#5C0F15]">
-                          ₹{cartItem.price}
-                        </span>
+
+                        <div className="flex items-center gap-3">
+                          <span className="bebas-text text-2xl font-bold text-[#5C0F15]">
+                            ₹{cartItem.price}
+                          </span>
+                          {/* Remove Item Button */}
+                          <button
+                            onClick={() => removeFromCart(idx)}
+                            className="p-1.5 text-neutral-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                            aria-label="Remove Item"
+                            title="Remove from Cart"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
                       </div>
                     ))}
                   </div>
