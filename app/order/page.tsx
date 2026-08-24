@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -19,6 +19,24 @@ export default function LazizMenuOrderPage() {
   const [cart, setCart] = useState<{ id: number; title: string; size: string; price: number; img: string }[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
+  const [loadedImages, setLoadedImages] = useState<{ [key: number]: boolean }>({});
+
+  useEffect(() => {
+    const imagesToPreload = [
+      "/1.png",
+      "/2.png",
+      "/3.png",
+      "/4.png",
+      "/5.png",
+      "/6.png",
+      "/image.png",
+      "/menu_bg.jpg",
+    ];
+    imagesToPreload.forEach((src) => {
+      const img = new window.Image();
+      img.src = src;
+    });
+  }, []);
 
   const [menuItems, setMenuItems] = useState([
     {
@@ -209,7 +227,11 @@ export default function LazizMenuOrderPage() {
                       src={item.img}
                       alt={item.title}
                       fill
-                      className="object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
+                      priority={item.id <= 3}
+                      onLoad={() => setLoadedImages((prev) => ({ ...prev, [item.id]: true }))}
+                      className={`object-contain drop-shadow-2xl hover:scale-105 transition-all duration-500 ease-out ${
+                        loadedImages[item.id] ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                      }`}
                     />
                   </div>
 

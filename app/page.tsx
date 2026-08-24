@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, X, Award, Store, Users, Sparkles, Menu } from "lucide-react";
@@ -48,6 +48,26 @@ export default function RollingPizzaPage() {
   const [[page, direction], setPage] = useState([0, 0]);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Preload all pizza and ingredient images on mount for instant, smooth appearance
+  useEffect(() => {
+    const imagesToPreload = [
+      "/1.png",
+      "/2.png",
+      "/3.png",
+      "/4.png",
+      "/5.png",
+      "/6.png",
+      "/onion.png",
+      "/garlic.png",
+      "/paneer.png",
+      "/image.png",
+    ];
+    imagesToPreload.forEach((src) => {
+      const img = new window.Image();
+      img.src = src;
+    });
+  }, []);
 
   const currentIndex = ((page % pizzas.length) + pizzas.length) % pizzas.length;
   const currentPizza = pizzas[currentIndex];
@@ -302,7 +322,8 @@ export default function RollingPizzaPage() {
               alt={currentPizza.title}
               fetchPriority="high"
               decoding="async"
-              className="max-w-[55vw] max-h-[38vh] sm:max-w-[62vw] sm:max-h-[52vh] md:max-w-[68vw] md:max-h-[68vh] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] pointer-events-none z-10"
+              style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
+              className="max-w-[55vw] max-h-[38vh] sm:max-w-[62vw] sm:max-h-[52vh] md:max-w-[68vw] md:max-h-[68vh] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] pointer-events-none z-10 gpu-accelerated"
             />
 
             {/* INGREDIENTS */}
@@ -310,22 +331,26 @@ export default function RollingPizzaPage() {
               initial={{ scale: 0, opacity: 0, rotate: -35 }} animate={{ scale: 1, opacity: 1, rotate: -10 }} exit={{ scale: 0, opacity: 0, rotate: 35 }} 
               transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
               src="/onion.png" alt="Fresh Onion" decoding="async"
-              className="absolute -top-4 -left-6 sm:-top-12 sm:-left-24 md:-top-10 md:-left-36 w-12 sm:w-24 md:w-32 h-12 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
+              style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
+              className="absolute -top-4 -left-6 sm:-top-12 sm:-left-24 md:-top-10 md:-left-36 w-12 sm:w-24 md:w-32 h-12 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none gpu-accelerated"
             />
             <motion.img
               initial={{ scale: 0, opacity: 0, rotate: 35 }} animate={{ scale: 1, opacity: 1, rotate: 12 }} exit={{ scale: 0, opacity: 0, rotate: -35 }} 
               transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
               src="/garlic.png" alt="Garlic" decoding="async"
-              className="absolute -top-4 -right-6 sm:-top-12 sm:-right-24 md:-top-10 md:-right-36 w-12 sm:w-24 md:w-32 h-12 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
+              style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
+              className="absolute -top-4 -right-6 sm:-top-12 sm:-right-24 md:-top-10 md:-right-36 w-12 sm:w-24 md:w-32 h-12 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none gpu-accelerated"
             />
             <motion.img
               initial={{ scale: 0, opacity: 0, rotate: -25 }} animate={{ scale: 1, opacity: 1, rotate: -8 }} exit={{ scale: 0, opacity: 0, rotate: 25 }} 
               transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
               src="/paneer.png" alt="Paneer Cubes" decoding="async"
-              className="absolute -bottom-4 -right-6 sm:-bottom-12 sm:-right-24 md:-bottom-10 md:-right-36 w-12 sm:w-24 md:w-32 h-12 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
+              style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
+              className="absolute -bottom-4 -right-6 sm:-bottom-12 sm:-right-24 md:-bottom-10 md:-right-36 w-12 sm:w-24 md:w-32 h-12 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none gpu-accelerated"
             />
           </div>
         </AnimatePresence>
+
       </div>
 
       {/* BOTTOM LEFT DESCRIPTION */}
