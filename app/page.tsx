@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, X, Award, Store, Users, Sparkles, Menu } from "lucide-react";
@@ -59,7 +59,6 @@ const PIZZAS = [
     name: "MEAT LOVERS",
     desc: "A hearty combination of pepperoni, bacon, chicken, and savory meat toppings.",
     floating: [
-      // Sweet spot distance: balanced between too far (-16) and touching (-6) -> using -11 / -16
       { src: "/bacon.webp", alt: "Bacon Strip", pos: "-top-11 -left-11 sm:-top-16 sm:-left-16", size: "w-20 sm:w-28 md:w-36 h-20 sm:h-28 md:h-36", duration: 3.5, floatOffset: -8 },
       { src: "/pepperoni.webp", alt: "Pepperoni", pos: "-top-16 -right-16 sm:-top-24 sm:-right-24", size: "w-28 sm:w-40 md:w-48 h-28 sm:h-40 md:h-48", duration: 4.0, floatOffset: 8 },
       { src: "/tomato.webp", alt: "Tomato Slice", pos: "-bottom-16 -right-16 sm:-bottom-24 sm:-right-24", size: SMALL_TOMATO_SIZE, duration: 3.7, floatOffset: -6 },
@@ -71,7 +70,6 @@ const PIZZAS = [
     name: "HAWAIIAN",
     desc: "A sweet and savory blend of juicy pineapple, ham, melted cheese, and tomato sauce.",
     floating: [
-      // Sweet spot distance here too
       { src: "/bacon.webp", alt: "Bacon Strip", pos: "-top-11 -left-11 sm:-top-16 sm:-left-16", size: "w-20 sm:w-28 md:w-36 h-20 sm:h-28 md:h-36", duration: 3.8, floatOffset: -7 },
       { src: "/bellpepper.webp", alt: "Bell Pepper", pos: "-top-16 -right-16 sm:-top-24 sm:-right-24", size: "w-28 sm:w-40 md:w-48 h-28 sm:h-40 md:h-48", duration: 3.5, floatOffset: 9 },
       { src: "/tomato.webp", alt: "Tomato Slice", pos: "-bottom-16 -right-16 sm:-bottom-24 sm:-right-24", size: SMALL_TOMATO_SIZE, duration: 4.2, floatOffset: -8 },
@@ -90,10 +88,10 @@ const CATEGORIES = [
 
 const IMAGE_VARIANTS = {
   enter: (direction: number) => ({
-    x: direction > 0 ? 200 : -200,
-    rotate: direction > 0 ? 90 : -90,
+    x: direction > 0 ? 100 : -100,
+    rotate: direction > 0 ? 25 : -25,
     opacity: 0,
-    scale: 0.85,
+    scale: 0.92,
   }),
   center: {
     x: 0,
@@ -102,10 +100,10 @@ const IMAGE_VARIANTS = {
     scale: 1,
   },
   exit: (direction: number) => ({
-    x: direction < 0 ? 200 : -200,
-    rotate: direction < 0 ? -90 : 90,
+    x: direction < 0 ? 100 : -100,
+    rotate: direction < 0 ? -25 : 25,
     opacity: 0,
-    scale: 0.85,
+    scale: 0.92,
   }),
 };
 
@@ -113,63 +111,76 @@ const TOTAL_SEGMENTS = 6;
 const SEGMENTS = Array.from({ length: TOTAL_SEGMENTS });
 
 export default function RollingPizzaPage() {
-  const [[page, direction], setPage] = useState([4, 0]); // Default to Meat Lovers (index 4)
+  const [[page, direction], setPage] = useState([4, 0]);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const isScrollingRef = useRef(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const paginate = useCallback((newDirection: number) => {
     setPage(([prevPage]) => [prevPage + newDirection, newDirection]);
   }, []);
 
+  // Optimized debounced scroll listener using requestAnimationFrame for zero layout thrashing
   useEffect(() => {
-    if (isHovered || isAboutOpen) return;
-    const interval = setInterval(() => {
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          isScrollingRef.current = true;
+          if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+          
+          scrollTimeoutRef.current = setTimeout(() => {
+            isScrollingRef.current = false;
+          }, 250);
+
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (isHovered || isAboutOpen || isScrollingRef.current) return;
       paginate(1);
-    }, 10000);
-    return () => clearInterval(interval);
+    }, 2500);
+
+    return () => clearInterval(timer);
   }, [paginate, isHovered, isAboutOpen]);
 
   useEffect(() => {
     const imagesToPreload = [
-      "/1.webp",
-      "/2.webp",
-      "/3.webp",
-      "/4.webp",
-      "/5.webp",
-      "/6.webp",
-      "/onion.webp",
-      "/garlic.webp",
-      "/paneer.webp",
-      "/bellpepper.webp",
-      "/bacon.webp",
-      "/mushroom.webp",
-      "/pepperoni.webp",
-      "/tomato.webp",
-      "/image.webp",
+      "/1.webp", "/2.webp", "/3.webp", "/4.webp", "/5.webp", "/6.webp",
+      "/onion.webp", "/garlic.webp", "/paneer.webp", "/bellpepper.webp",
+      "/bacon.webp", "/mushroom.webp", "/pepperoni.webp", "/tomato.webp", "/image.webp",
     ];
-    const timer = setTimeout(() => {
-      imagesToPreload.forEach((src) => {
-        const img = new window.Image();
-        img.src = src;
-      });
-    }, 100);
-    return () => clearTimeout(timer);
+    imagesToPreload.forEach((src) => {
+      const img = new window.Image();
+      img.src = src;
+    });
   }, []);
 
   const currentIndex = ((page % PIZZAS.length) + PIZZAS.length) % PIZZAS.length;
   const currentPizza = PIZZAS[currentIndex];
 
   return (
-    <div className="w-full max-w-full min-h-screen min-h-[100dvh] bg-[radial-gradient(ellipse_at_center,_#6e1315_0%,_#1a0303_75%,_#000000_100%)] flex flex-col items-center justify-start overflow-x-hidden relative select-none">
+    <div className="w-full max-w-full min-h-screen min-h-[100dvh] bg-[radial-gradient(ellipse_at_center,_#6e1315_0%,_#1a0303_75%,_#000000_100%)] flex flex-col items-center justify-start overflow-x-hidden relative select-none transform-gpu">
       <PizzaLoader minDuration={1000} />
 
-      {/* BACKGROUND GRAPHICS */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+      {/* BACKGROUND GRAPHICS (Optimized with pointer-events-none & will-change) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 transform-gpu">
         <div className="absolute top-[18%] left-[2%] md:left-[3%] transform -rotate-12">
           <p className="graffiti-text text-white/20 text-xl sm:text-2xl xl:text-3xl max-w-[200px] leading-tight">I LOVE THE SHAPE OF YOU</p>
         </div>
-
         <div className="absolute top-[42%] left-[2%] md:left-[3%] transform -rotate-6 hidden sm:block">
           <svg width="140" height="140" viewBox="0 0 100 100" className="absolute -top-6 -left-6 text-white/20" fill="none" stroke="currentColor" strokeWidth="1.5">
             <circle cx="50" cy="50" r="45" strokeDasharray="6 4" />
@@ -177,29 +188,23 @@ export default function RollingPizzaPage() {
           </svg>
           <p className="graffiti-text text-white/20 text-base sm:text-lg xl:text-xl text-center w-28 leading-snug">BUY ME PIZZA & TELL ME I AM PRETTY</p>
         </div>
-
         <div className="absolute bottom-[28%] left-[2%] md:left-[3%] transform -rotate-3">
           <p className="graffiti-text text-white/20 text-base sm:text-xl xl:text-2xl max-w-[220px] leading-tight">THE PERSON YOU LOVE<br />IS 72.8% PIZZA.</p>
         </div>
-
         <div className="absolute top-[15%] right-[2%] md:right-[3%] transform rotate-6">
           <p className="graffiti-text text-white/20 text-base sm:text-lg xl:text-xl text-right max-w-[180px] leading-tight">YOU ARE WHAT YOU EAT... SO I AM PIZZA.</p>
         </div>
-
         <div className="absolute top-[32%] right-[2%] md:right-[3%] transform rotate-12">
           <p className="graffiti-text text-white/20 text-3xl sm:text-4xl xl:text-5xl leading-[0.85] text-right">SLICE<br />SLICE<br />BABY</p>
         </div>
-
         <div className="absolute top-[55%] right-[2%] md:right-[3%] transform -rotate-6 hidden sm:block">
           <p className="graffiti-text text-white/20 text-xl xl:text-3xl whitespace-nowrap">PIZZA At Its Best</p>
         </div>
-
-        <div className="absolute bottom-[25%] right-[2%] md:right-[3%] transform -rotate-12 drop-shadow-2xl">
+        <div className="absolute bottom-[25%] right-[2%] md:right-[3%] transform -rotate-12">
           <div className="bg-[#cc1111]/90 rounded-full w-24 h-24 sm:w-28 sm:h-28 xl:w-32 xl:h-32 flex items-center justify-center p-2 border-2 border-white/40 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
             <p className="graffiti-text text-white/90 text-center text-xs sm:text-sm xl:text-base leading-tight">Don't<br />Worry<br /><span className="text-lg sm:text-xl xl:text-2xl">PIZZA</span><br />is Coming</p>
           </div>
         </div>
-
         <div className="absolute bottom-[8%] right-[4%] md:right-[5%] transform rotate-3 hidden sm:block">
           <p className="graffiti-text text-white/20 text-xl xl:text-3xl whitespace-nowrap">It's Laziz PIZZA DAY</p>
         </div>
@@ -262,7 +267,7 @@ export default function RollingPizzaPage() {
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
-              transition={{ duration: 0.25 }}
+              transition={{ duration: 0.2 }}
               className="fixed top-16 right-4 z-40 bg-[#0a0a0a]/95 border border-neutral-800 backdrop-blur-xl rounded-2xl p-4 shadow-2xl flex flex-col gap-3 md:hidden min-w-[170px]"
             >
               <button onClick={() => { setIsAboutOpen(true); setIsMobileMenuOpen(false); }} className="text-left text-xs font-bold uppercase tracking-wider text-neutral-200 hover:text-[#FF5500] py-1.5 border-b border-neutral-800 active:scale-95 transition-transform">
@@ -280,40 +285,40 @@ export default function RollingPizzaPage() {
 
       {/* MAIN CAROUSEL CANVAS */}
       <div 
-        className="relative w-full max-w-full flex flex-col items-center justify-center z-10 px-4 pt-24 sm:pt-28 md:pt-24 pb-2 md:pb-6"
+        className="relative w-full max-w-full flex flex-col items-center justify-center z-10 px-4 pt-32 sm:pt-36 md:pt-36 pb-2 md:pb-6 transform-gpu will-change-transform"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <motion.button
-          whileHover={{ scale: 1.15, backgroundColor: "#ffffff", color: "#6e1315" }}
-          whileTap={{ scale: 0.9 }}
+          whileHover={{ scale: 1.1, backgroundColor: "#ffffff", color: "#6e1315" }}
+          whileTap={{ scale: 0.92 }}
           onClick={() => paginate(-1)}
-          className="hidden md:flex absolute left-[27%] top-1/2 transform -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/30 text-white items-center justify-center transition-shadow duration-300 shadow-[0_0_25px_rgba(0,0,0,0.7)] cursor-pointer group"
+          className="hidden md:flex absolute left-[27%] top-1/2 transform -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/30 text-white items-center justify-center transition-colors shadow-2xl cursor-pointer group"
           aria-label="Previous Pizza"
         >
           <ChevronLeft className="w-7 h-7 transition-transform group-hover:-translate-x-1" />
         </motion.button>
 
         <motion.button
-          whileHover={{ scale: 1.15, backgroundColor: "#ffffff", color: "#6e1315" }}
-          whileTap={{ scale: 0.9 }}
+          whileHover={{ scale: 1.1, backgroundColor: "#ffffff", color: "#6e1315" }}
+          whileTap={{ scale: 0.92 }}
           onClick={() => paginate(1)}
-          className="hidden md:flex absolute right-[27%] top-1/2 transform -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/30 text-white items-center justify-center transition-shadow duration-300 shadow-[0_0_25px_rgba(0,0,0,0.7)] cursor-pointer group"
+          className="hidden md:flex absolute right-[27%] top-1/2 transform -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/30 text-white items-center justify-center transition-colors shadow-2xl cursor-pointer group"
           aria-label="Next Pizza"
         >
           <ChevronRight className="w-7 h-7 transition-transform group-hover:translate-x-1" />
         </motion.button>
 
-        <div className="relative w-[270px] h-[270px] sm:w-[350px] sm:h-[350px] md:w-[440px] md:h-[440px] flex items-center justify-center shrink-0 aspect-square">
-          <AnimatePresence initial={false} custom={direction}>
+        <div className="relative w-[270px] h-[270px] sm:w-[350px] sm:h-[350px] md:w-[440px] md:h-[440px] flex items-center justify-center shrink-0 aspect-square transform-gpu">
+          <AnimatePresence initial={false} custom={direction} mode="popLayout">
             <React.Fragment key={page}>
               <motion.div
                 custom={direction}
-                initial={{ opacity: 0, rotate: direction > 0 ? 45 : -45 }}
+                initial={{ opacity: 0, rotate: direction > 0 ? 15 : -15 }}
                 animate={{ opacity: 1, rotate: 0 }}
-                exit={{ opacity: 0, rotate: direction < 0 ? 45 : -45 }}
-                transition={{ duration: 0.45, ease: "easeInOut" }}
-                className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 scale-[0.85] sm:scale-95 md:scale-90 style-gpu"
+                exit={{ opacity: 0, rotate: direction < 0 ? 15 : -15 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 scale-[0.85] sm:scale-95 md:scale-90 transform-gpu will-change-transform"
               >
                 <svg viewBox="0 0 400 400" className="w-[125%] h-[125%] overflow-visible">
                   <defs>
@@ -324,7 +329,7 @@ export default function RollingPizzaPage() {
                     return (
                       <g key={i} transform={`rotate(${angle} 200 200)`}>
                         <text
-                          className="fill-white bebas-text font-black uppercase drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] text-[14px] sm:text-[18px] md:text-[23px]"
+                          className="fill-white bebas-text font-black uppercase text-[14px] sm:text-[18px] md:text-[23px]"
                           textLength="165"
                           lengthAdjust="spacingAndGlyphs"
                         >
@@ -347,15 +352,15 @@ export default function RollingPizzaPage() {
                 exit="exit"
                 transition={{
                   x: { type: "spring", stiffness: 300, damping: 30 },
-                  opacity: { duration: 0.3 },
-                  rotate: { duration: 0.45, ease: "easeOut" }
+                  opacity: { duration: 0.2 },
+                  rotate: { duration: 0.3, ease: "easeInOut" }
                 }}
                 alt={currentPizza.title}
                 fetchPriority="high"
                 decoding="async"
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.15}
+                dragElastic={0.1}
                 dragSnapToOrigin={true}
                 onDragStart={() => setIsHovered(true)}
                 onDragEnd={(_, info) => {
@@ -366,7 +371,7 @@ export default function RollingPizzaPage() {
                     paginate(-1);
                   }
                 }}
-                className="absolute inset-0 w-full h-full object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] pointer-events-auto cursor-grab active:cursor-grabbing z-10 touch-pan-y select-none will-change-transform"
+                className="absolute inset-0 w-full h-full object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.7)] pointer-events-auto cursor-grab active:cursor-grabbing z-10 touch-pan-y select-none transform-gpu will-change-transform"
               />
 
               {/* FLOATING INGREDIENTS */}
@@ -377,13 +382,13 @@ export default function RollingPizzaPage() {
                   animate={{ scale: 1, opacity: 1, y: [0, item.floatOffset, 0] }}
                   exit={{ scale: 0, opacity: 0 }}
                   transition={{
-                    scale: { duration: 0.35 },
+                    scale: { duration: 0.25 },
                     y: { repeat: Infinity, duration: item.duration, ease: "easeInOut" }
                   }}
                   src={item.src}
                   alt={item.alt}
                   decoding="async"
-                  className={`absolute ${item.pos} ${item.size} object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none will-change-transform`}
+                  className={`absolute ${item.pos} ${item.size} object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] z-20 pointer-events-none transform-gpu will-change-transform`}
                 />
               ))}
             </React.Fragment>
@@ -421,8 +426,8 @@ export default function RollingPizzaPage() {
             {CATEGORIES.map((cat, idx) => (
               <Link key={idx} href="/order" className="block">
                 <motion.div whileTap={{ scale: 0.92 }} className="group flex flex-col items-center cursor-pointer">
-                  <div className="relative w-16 h-16 sm:w-24 sm:h-24 flex items-center justify-center mb-1 group-hover:scale-110 transition-transform duration-300">
-                    <img src={cat.img} alt={cat.name} className="w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.9)]" />
+                  <div className="relative w-16 h-16 sm:w-24 sm:h-24 flex items-center justify-center mb-1 group-hover:scale-105 transition-transform duration-300">
+                    <img src={cat.img} alt={cat.name} className="w-full h-full object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.8)]" />
                   </div>
                   <span className="text-[10px] sm:text-xs font-bold text-white text-center group-hover:text-[#FF5500] transition-colors leading-tight drop-shadow-md">
                     {cat.name}
@@ -435,9 +440,9 @@ export default function RollingPizzaPage() {
           <div className="hidden md:flex flex-row items-center justify-between gap-4 xl:gap-6 w-full">
             {CATEGORIES.map((cat, idx) => (
               <Link key={idx} href="/order" className="flex-1">
-                <motion.div whileHover={{ y: -8, scale: 1.05 }} whileTap={{ scale: 0.95 }} className="group flex flex-col items-center cursor-pointer">
-                  <div className="relative w-24 h-24 xl:w-28 xl:h-28 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
-                    <img src={cat.img} alt={cat.name} className="w-full h-full object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.95)]" />
+                <motion.div whileHover={{ y: -6, scale: 1.03 }} whileTap={{ scale: 0.95 }} className="group flex flex-col items-center cursor-pointer">
+                  <div className="relative w-24 h-24 xl:w-28 xl:h-28 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform duration-300">
+                    <img src={cat.img} alt={cat.name} className="w-full h-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)]" />
                   </div>
                   <span className="text-xs xl:text-sm font-bold text-white text-center group-hover:text-[#FF5500] transition-colors leading-tight drop-shadow-md whitespace-nowrap">
                     {cat.name}
@@ -464,7 +469,7 @@ export default function RollingPizzaPage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
               className="bg-[#0F0F0F] border border-neutral-800 rounded-3xl max-w-2xl w-full p-5 sm:p-8 max-h-[88vh] overflow-y-auto relative z-10 text-white shadow-2xl custom-scrollbar"
             >
               <button onClick={() => setIsAboutOpen(false)} className="absolute top-4 right-4 sm:top-5 sm:right-5 text-neutral-400 hover:text-white p-2 rounded-full bg-neutral-900 border border-neutral-800 transition-colors cursor-pointer active:scale-95">
