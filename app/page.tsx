@@ -110,53 +110,53 @@ export default function RollingPizzaPage() {
         
         {/* --- EXTREME LEFT COLUMN --- */}
         <div className="absolute top-[18%] left-[2%] md:left-[3%] transform -rotate-12">
-          <p className="graffiti-text text-white/20 text-2xl xl:text-3xl max-w-[200px] leading-tight">I LOVE THE SHAPE OF YOU</p>
+          <p className="graffiti-text text-white/20 text-xl sm:text-2xl xl:text-3xl max-w-[200px] leading-tight">I LOVE THE SHAPE OF YOU</p>
         </div>
 
-        <div className="absolute top-[42%] left-[2%] md:left-[3%] transform -rotate-6">
-          <svg width="160" height="160" viewBox="0 0 100 100" className="absolute -top-6 -left-6 text-white/20" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <div className="absolute top-[42%] left-[2%] md:left-[3%] transform -rotate-6 hidden sm:block">
+          <svg width="140" height="140" viewBox="0 0 100 100" className="absolute -top-6 -left-6 text-white/20" fill="none" stroke="currentColor" strokeWidth="1.5">
              <circle cx="50" cy="50" r="45" strokeDasharray="6 4"/>
              <circle cx="50" cy="50" r="40" strokeDasharray="2 6"/>
           </svg>
-          <p className="graffiti-text text-white/20 text-lg xl:text-xl text-center w-28 leading-snug">BUY ME PIZZA & TELL ME I AM PRETTY</p>
+          <p className="graffiti-text text-white/20 text-base sm:text-lg xl:text-xl text-center w-28 leading-snug">BUY ME PIZZA & TELL ME I AM PRETTY</p>
         </div>
 
-        <div className="absolute bottom-[25%] left-[2%] md:left-[3%] transform -rotate-3">
-           <p className="graffiti-text text-white/20 text-xl xl:text-2xl max-w-[220px] leading-tight">THE PERSON YOU LOVE<br/>IS 72.8% PIZZA.</p>
+        <div className="absolute bottom-[28%] left-[2%] md:left-[3%] transform -rotate-3">
+           <p className="graffiti-text text-white/20 text-base sm:text-xl xl:text-2xl max-w-[220px] leading-tight">THE PERSON YOU LOVE<br/>IS 72.8% PIZZA.</p>
         </div>
 
         {/* --- EXTREME RIGHT COLUMN --- */}
         <div className="absolute top-[15%] right-[2%] md:right-[3%] transform rotate-6">
-           <p className="graffiti-text text-white/20 text-lg xl:text-xl text-right max-w-[180px] leading-tight">YOU ARE WHAT YOU EAT... SO I AM PIZZA.</p>
+           <p className="graffiti-text text-white/20 text-base sm:text-lg xl:text-xl text-right max-w-[180px] leading-tight">YOU ARE WHAT YOU EAT... SO I AM PIZZA.</p>
         </div>
 
         <div className="absolute top-[32%] right-[2%] md:right-[3%] transform rotate-12">
-           <p className="graffiti-text text-white/20 text-4xl xl:text-5xl leading-[0.85] text-right">SLICE<br/>SLICE<br/>BABY</p>
+           <p className="graffiti-text text-white/20 text-3xl sm:text-4xl xl:text-5xl leading-[0.85] text-right">SLICE<br/>SLICE<br/>BABY</p>
         </div>
 
-        <div className="absolute top-[55%] right-[2%] md:right-[3%] transform -rotate-6">
-           <p className="graffiti-text text-white/20 text-2xl xl:text-3xl whitespace-nowrap">PIZZA At Its Best</p>
+        <div className="absolute top-[55%] right-[2%] md:right-[3%] transform -rotate-6 hidden sm:block">
+           <p className="graffiti-text text-white/20 text-xl xl:text-3xl whitespace-nowrap">PIZZA At Its Best</p>
         </div>
 
         {/* Red Badge */}
-        <div className="absolute bottom-[22%] right-[2%] md:right-[3%] transform -rotate-12 drop-shadow-2xl">
-           <div className="bg-[#cc1111]/90 rounded-full w-28 h-28 xl:w-32 xl:h-32 flex items-center justify-center p-2 border-2 border-white/40 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-              <p className="graffiti-text text-white/90 text-center text-sm xl:text-base leading-tight">Don't<br/>Worry<br/><span className="text-xl xl:text-2xl">PIZZA</span><br/>is Coming</p>
+        <div className="absolute bottom-[25%] right-[2%] md:right-[3%] transform -rotate-12 drop-shadow-2xl">
+           <div className="bg-[#cc1111]/90 rounded-full w-24 h-24 sm:w-28 sm:h-28 xl:w-32 xl:h-32 flex items-center justify-center p-2 border-2 border-white/40 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+              <p className="graffiti-text text-white/90 text-center text-xs sm:text-sm xl:text-base leading-tight">Don't<br/>Worry<br/><span className="text-lg sm:text-xl xl:text-2xl">PIZZA</span><br/>is Coming</p>
            </div>
         </div>
 
-        <div className="absolute bottom-[8%] right-[4%] md:right-[5%] transform rotate-3">
-           <p className="graffiti-text text-white/20 text-2xl xl:text-3xl whitespace-nowrap">It's Laziz PIZZA DAY</p>
+        <div className="absolute bottom-[8%] right-[4%] md:right-[5%] transform rotate-3 hidden sm:block">
+           <p className="graffiti-text text-white/20 text-xl xl:text-3xl whitespace-nowrap">It's Laziz PIZZA DAY</p>
         </div>
 
         {/* --- SUBTLE ARCHITECTURAL SKETCHES --- */}
-        <svg className="absolute bottom-[8%] left-[2%] md:left-[4%] w-24 h-24 xl:w-32 xl:h-32 opacity-20 text-white transform -rotate-6" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <svg className="absolute bottom-[8%] left-[2%] md:left-[4%] w-20 h-20 sm:w-24 sm:h-24 xl:w-32 xl:h-32 opacity-20 text-white transform -rotate-6" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M10,80 Q50,90 90,80 L85,40 Q50,30 15,40 Z" />
             <path d="M15,60 Q50,70 85,60" />
             <path d="M20,40 L20,82 M40,35 L40,86 M60,35 L60,86 M80,40 L80,82" strokeDasharray="3 3"/>
         </svg>
 
-        <svg className="absolute top-[70%] right-[15%] w-16 h-32 xl:w-20 xl:h-40 opacity-20 text-white transform rotate-[15deg]" viewBox="0 0 100 200" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <svg className="absolute top-[70%] right-[15%] w-12 h-24 sm:w-16 sm:h-32 xl:w-20 xl:h-40 opacity-20 text-white transform rotate-[15deg]" viewBox="0 0 100 200" fill="none" stroke="currentColor" strokeWidth="1.5">
             <rect x="30" y="20" width="40" height="160" rx="3" />
             <line x1="25" y1="40" x2="75" y2="40" />
             <line x1="25" y1="65" x2="75" y2="65" />
@@ -170,14 +170,14 @@ export default function RollingPizzaPage() {
         </svg>
 
         {/* --- SCATTERED PIZZA SLICES --- */}
-        <svg className="absolute top-[60%] left-[16%] w-16 h-16 opacity-20 text-white transform rotate-[45deg]" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg className="absolute top-[60%] left-[16%] w-12 h-12 sm:w-16 sm:h-16 opacity-20 text-white transform rotate-[45deg]" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M50,10 L90,80 Q50,95 10,80 Z" />
           <circle cx="50" cy="40" r="5" fill="currentColor"/>
           <circle cx="40" cy="65" r="4" fill="currentColor"/>
           <circle cx="65" cy="70" r="6" fill="currentColor"/>
         </svg>
 
-        <svg className="absolute top-[20%] right-[22%] w-12 h-12 opacity-20 text-white transform rotate-[110deg]" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg className="absolute top-[20%] right-[22%] w-10 h-10 sm:w-12 sm:h-12 opacity-20 text-white transform rotate-[110deg]" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M50,10 L90,80 Q50,95 10,80 Z" />
           <circle cx="45" cy="45" r="4" fill="currentColor"/>
           <circle cx="55" cy="65" r="5" fill="currentColor"/>
@@ -196,7 +196,7 @@ export default function RollingPizzaPage() {
         />
       </div>
 
-      {/* TOP RIGHT CORNER NAVIGATION HEADER */}
+      {/* TOP RIGHT CORNER NAVIGATION HEADER (PC) */}
       <nav className="fixed top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-40 hidden md:flex items-center gap-4 sm:gap-6 md:gap-8 pointer-events-auto">
         <button onClick={() => setIsAboutOpen(true)} className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white hover:text-[#FF5500] transition-colors cursor-pointer drop-shadow-md">
           About Us
@@ -206,7 +206,6 @@ export default function RollingPizzaPage() {
             {item}
           </button>
         ))}
-        {/* Connected Order Link */}
         <Link
           href="/order"
           className="px-5 py-2 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#6e1315] bg-white hover:bg-neutral-200 rounded-full transition-all cursor-pointer shadow-xl active:scale-95 border-2 border-white inline-block text-center"
@@ -250,25 +249,24 @@ export default function RollingPizzaPage() {
       </AnimatePresence>
 
       {/* Animated Rolling Pizza & Ingredients Canvas */}
-      <div className="relative w-full flex-1 flex flex-col items-center justify-center z-10 px-4 pt-12 md:pt-0">
+      <div className="relative w-full flex-1 flex flex-col items-center justify-center z-10 px-4 pt-16 md:pt-0">
         
-        {/* CREATIVE LEFT GLOWING ARROW BUTTON */}
+        {/* DESKTOP GLOWING ARROW BUTTONS (Absolute positioned on sides) */}
         <motion.button
           whileHover={{ scale: 1.15, backgroundColor: "#ffffff", color: "#6e1315" }}
           whileTap={{ scale: 0.9 }}
           onClick={() => paginate(-1)}
-          className="absolute left-[12%] sm:left-[23%] md:left-[27%] z-30 w-14 h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/30 text-white flex items-center justify-center transition-shadow duration-300 shadow-[0_0_25px_rgba(0,0,0,0.7)] cursor-pointer group"
+          className="hidden md:flex absolute left-[27%] z-30 w-14 h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/30 text-white items-center justify-center transition-shadow duration-300 shadow-[0_0_25px_rgba(0,0,0,0.7)] cursor-pointer group"
           aria-label="Previous Pizza"
         >
           <ChevronLeft className="w-7 h-7 transition-transform group-hover:-translate-x-1" />
         </motion.button>
 
-        {/* CREATIVE RIGHT GLOWING ARROW BUTTON */}
         <motion.button
           whileHover={{ scale: 1.15, backgroundColor: "#ffffff", color: "#6e1315" }}
           whileTap={{ scale: 0.9 }}
           onClick={() => paginate(1)}
-          className="absolute right-[12%] sm:right-[23%] md:right-[27%] z-30 w-14 h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/30 text-white flex items-center justify-center transition-shadow duration-300 shadow-[0_0_25px_rgba(0,0,0,0.7)] cursor-pointer group"
+          className="hidden md:flex absolute right-[27%] z-30 w-14 h-14 rounded-full bg-black/50 backdrop-blur-xl border border-white/30 text-white items-center justify-center transition-shadow duration-300 shadow-[0_0_25px_rgba(0,0,0,0.7)] cursor-pointer group"
           aria-label="Next Pizza"
         >
           <ChevronRight className="w-7 h-7 transition-transform group-hover:translate-x-1" />
@@ -277,18 +275,17 @@ export default function RollingPizzaPage() {
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <div key={page} className="relative flex flex-col items-center justify-center">
             
-            {/* PERFECTLY EVEN BALANCED CIRCULAR TEXT LOOP */}
+            {/* CIRCULAR TEXT RING */}
             <motion.div 
               custom={direction}
               initial={{ opacity: 0, scale: 0.85, rotate: direction > 0 ? 180 : -180 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               exit={{ opacity: 0, scale: 0.85, rotate: direction < 0 ? 180 : -180 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 scale-100 sm:scale-95 md:scale-90"
+              className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 scale-[0.85] sm:scale-95 md:scale-90"
             >
               <svg viewBox="0 0 400 400" className="w-[125%] h-[125%] overflow-visible">
                 <defs>
-                  {/* Clean arc path for each segment */}
                   <path id={`segmentPath-${page}`} d="M 200,30 A 170,170 0 0,1 370,200" fill="none" />
                 </defs>
                 {segments.map((_, i) => {
@@ -296,7 +293,7 @@ export default function RollingPizzaPage() {
                   return (
                     <g key={i} transform={`rotate(${angle} 200 200)`}>
                       <text 
-                        className="fill-white bebas-text font-black uppercase drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] text-[15px] sm:text-[19px] md:text-[23px]"
+                        className="fill-white bebas-text font-black uppercase drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] text-[14px] sm:text-[18px] md:text-[23px]"
                         textLength="165"
                         lengthAdjust="spacingAndGlyphs"
                       >
@@ -322,8 +319,12 @@ export default function RollingPizzaPage() {
               alt={currentPizza.title}
               fetchPriority="high"
               decoding="async"
+<<<<<<< Updated upstream
               style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
               className="max-w-[55vw] max-h-[38vh] sm:max-w-[62vw] sm:max-h-[52vh] md:max-w-[68vw] md:max-h-[68vh] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] pointer-events-none z-10 gpu-accelerated"
+=======
+              className="max-w-[50vw] max-h-[32vh] sm:max-w-[60vw] sm:max-h-[48vh] md:max-w-[68vw] md:max-h-[68vh] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] pointer-events-none z-10"
+>>>>>>> Stashed changes
             />
 
             {/* INGREDIENTS */}
@@ -331,33 +332,68 @@ export default function RollingPizzaPage() {
               initial={{ scale: 0, opacity: 0, rotate: -35 }} animate={{ scale: 1, opacity: 1, rotate: -10 }} exit={{ scale: 0, opacity: 0, rotate: 35 }} 
               transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
               src="/onion.png" alt="Fresh Onion" decoding="async"
+<<<<<<< Updated upstream
               style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
               className="absolute -top-4 -left-6 sm:-top-12 sm:-left-24 md:-top-10 md:-left-36 w-12 sm:w-24 md:w-32 h-12 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none gpu-accelerated"
+=======
+              className="absolute -top-2 -left-4 sm:-top-8 sm:-left-16 md:-top-10 md:-left-36 w-10 sm:w-20 md:w-32 h-10 sm:h-20 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
+>>>>>>> Stashed changes
             />
             <motion.img
               initial={{ scale: 0, opacity: 0, rotate: 35 }} animate={{ scale: 1, opacity: 1, rotate: 12 }} exit={{ scale: 0, opacity: 0, rotate: -35 }} 
               transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
               src="/garlic.png" alt="Garlic" decoding="async"
+<<<<<<< Updated upstream
               style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
               className="absolute -top-4 -right-6 sm:-top-12 sm:-right-24 md:-top-10 md:-right-36 w-12 sm:w-24 md:w-32 h-12 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none gpu-accelerated"
+=======
+              className="absolute -top-2 -right-4 sm:-top-8 sm:-right-16 md:-top-10 md:-right-36 w-10 sm:w-20 md:w-32 h-10 sm:h-20 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
+>>>>>>> Stashed changes
             />
             <motion.img
               initial={{ scale: 0, opacity: 0, rotate: -25 }} animate={{ scale: 1, opacity: 1, rotate: -8 }} exit={{ scale: 0, opacity: 0, rotate: 25 }} 
               transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
               src="/paneer.png" alt="Paneer Cubes" decoding="async"
+<<<<<<< Updated upstream
               style={{ willChange: "transform, opacity", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
               className="absolute -bottom-4 -right-6 sm:-bottom-12 sm:-right-24 md:-bottom-10 md:-right-36 w-12 sm:w-24 md:w-32 h-12 sm:h-24 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none gpu-accelerated"
+=======
+              className="absolute -bottom-2 -right-4 sm:-bottom-8 sm:-right-16 md:-bottom-10 md:-right-36 w-10 sm:w-20 md:w-32 h-10 sm:h-20 md:h-32 object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
+>>>>>>> Stashed changes
             />
           </div>
         </AnimatePresence>
 
+<<<<<<< Updated upstream
+=======
+        {/* MOBILE & TABLET ARROW BUTTONS (Placed nicely underneath the pizza area) */}
+        <div className="flex md:hidden items-center gap-6 mt-6 z-30">
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={() => paginate(-1)}
+            className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg active:scale-95 cursor-pointer"
+            aria-label="Previous Pizza"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </motion.button>
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={() => paginate(1)}
+            className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg active:scale-95 cursor-pointer"
+            aria-label="Next Pizza"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </motion.button>
+        </div>
+
+>>>>>>> Stashed changes
       </div>
 
       {/* BOTTOM LEFT DESCRIPTION */}
-      <div className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 md:bottom-10 md:left-10 z-30 max-w-[180px] sm:max-w-xs md:max-w-md pointer-events-none bg-black/40 p-4 rounded-xl backdrop-blur-md border border-white/10 shadow-2xl">
+      <div className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 md:bottom-10 md:left-10 z-30 max-w-[200px] sm:max-w-xs md:max-w-md pointer-events-none bg-black/50 p-3.5 sm:p-4 rounded-xl backdrop-blur-md border border-white/10 shadow-2xl">
         <AnimatePresence mode="wait">
           <motion.div key={page} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.4 }}>
-            <h3 className="text-[12px] sm:text-sm md:text-base font-bold text-white tracking-[0.2em] uppercase mb-1">
+            <h3 className="text-[11px] sm:text-sm md:text-base font-bold text-white tracking-[0.2em] uppercase mb-1">
               {currentPizza.title}
             </h3>
             <p className="text-[10px] sm:text-xs md:text-sm text-neutral-300 font-medium leading-relaxed">
