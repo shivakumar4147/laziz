@@ -59,7 +59,6 @@ const PIZZAS = [
     name: "MEAT LOVERS",
     desc: "A hearty combination of pepperoni, bacon, chicken, and savory meat toppings.",
     floating: [
-      // Sweet spot distance: balanced between too far (-16) and touching (-6) -> using -11 / -16
       { src: "/bacon.webp", alt: "Bacon Strip", pos: "-top-11 -left-11 sm:-top-16 sm:-left-16", size: "w-20 sm:w-28 md:w-36 h-20 sm:h-28 md:h-36", duration: 3.5, floatOffset: -8 },
       { src: "/pepperoni.webp", alt: "Pepperoni", pos: "-top-16 -right-16 sm:-top-24 sm:-right-24", size: "w-28 sm:w-40 md:w-48 h-28 sm:h-40 md:h-48", duration: 4.0, floatOffset: 8 },
       { src: "/tomato.webp", alt: "Tomato Slice", pos: "-bottom-16 -right-16 sm:-bottom-24 sm:-right-24", size: SMALL_TOMATO_SIZE, duration: 3.7, floatOffset: -6 },
@@ -71,7 +70,6 @@ const PIZZAS = [
     name: "HAWAIIAN",
     desc: "A sweet and savory blend of juicy pineapple, ham, melted cheese, and tomato sauce.",
     floating: [
-      // Sweet spot distance here too
       { src: "/bacon.webp", alt: "Bacon Strip", pos: "-top-11 -left-11 sm:-top-16 sm:-left-16", size: "w-20 sm:w-28 md:w-36 h-20 sm:h-28 md:h-36", duration: 3.8, floatOffset: -7 },
       { src: "/bellpepper.webp", alt: "Bell Pepper", pos: "-top-16 -right-16 sm:-top-24 sm:-right-24", size: "w-28 sm:w-40 md:w-48 h-28 sm:h-40 md:h-48", duration: 3.5, floatOffset: 9 },
       { src: "/tomato.webp", alt: "Tomato Slice", pos: "-bottom-16 -right-16 sm:-bottom-24 sm:-right-24", size: SMALL_TOMATO_SIZE, duration: 4.2, floatOffset: -8 },
@@ -122,11 +120,12 @@ export default function RollingPizzaPage() {
     setPage(([prevPage]) => [prevPage + newDirection, newDirection]);
   }, []);
 
+  // Auto-scroll set to 5 seconds
   useEffect(() => {
     if (isHovered || isAboutOpen) return;
     const interval = setInterval(() => {
       paginate(1);
-    }, 10000);
+    }, 2000);
     return () => clearInterval(interval);
   }, [paginate, isHovered, isAboutOpen]);
 
@@ -278,9 +277,9 @@ export default function RollingPizzaPage() {
         )}
       </AnimatePresence>
 
-      {/* MAIN CAROUSEL CANVAS */}
+      {/* MAIN CAROUSEL CANVAS - Added increased vertical padding (pt-32 sm:pt-36 md:pt-36) */}
       <div 
-        className="relative w-full max-w-full flex flex-col items-center justify-center z-10 px-4 pt-24 sm:pt-28 md:pt-24 pb-2 md:pb-6"
+        className="relative w-full max-w-full flex flex-col items-center justify-center z-10 px-4 pt-32 sm:pt-36 md:pt-36 pb-2 md:pb-6"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
