@@ -115,7 +115,7 @@ export default function RollingPizzaPage() {
   };
 
   return (
-    <div className="w-full max-w-full min-h-screen min-h-[100dvh] bg-[radial-gradient(circle_at_center,_#6e1315_0%,_#1a0303_75%,_#000000_100%)] flex flex-col items-center justify-between overflow-hidden relative select-none">
+    <div className="w-full max-w-full min-h-screen min-h-[100dvh] bg-[radial-gradient(ellipse_at_center,_#6e1315_0%,_#1a0303_75%,_#000000_100%)] flex flex-col items-center justify-start overflow-x-hidden relative select-none">
       
       {/* BAKING PIZZA ANIMATED LOADER */}
       <PizzaLoader minDuration={1000} />
@@ -274,7 +274,7 @@ export default function RollingPizzaPage() {
       </AnimatePresence>
 
       {/* Animated Rolling Pizza & Ingredients Canvas */}
-      <div className="relative w-full max-w-full overflow-hidden flex flex-col items-center justify-center z-10 px-4 pt-32 sm:pt-36 md:pt-28 pb-4 md:pb-12 min-h-[460px] sm:min-h-[520px] md:min-h-[580px]">
+      <div className="relative w-full max-w-full flex flex-col items-center justify-center z-10 px-4 pt-24 sm:pt-28 md:pt-24 pb-2 md:pb-6">
 
         {/* DESKTOP GLOWING ARROW BUTTONS */}
         <motion.button
@@ -300,13 +300,33 @@ export default function RollingPizzaPage() {
         <AnimatePresence initial={false} custom={direction} mode="popLayout">
           <div key={page} className="relative w-[270px] h-[270px] sm:w-[350px] sm:h-[350px] md:w-[440px] md:h-[440px] flex items-center justify-center shrink-0 aspect-square">
 
-            {/* CIRCULAR TEXT RING */}
+            {/* CIRCULAR TEXT RING - SMOOTH TRANSITION */}
             <motion.div
               custom={direction}
-              initial={{ opacity: 0, scale: 0.85, rotate: direction > 0 ? 180 : -180 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              exit={{ opacity: 0, scale: 0.85, rotate: direction < 0 ? 180 : -180 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ 
+                opacity: 0, 
+                scale: 0.7,
+                rotate: direction > 0 ? 90 : -90
+              }}
+              animate={{ 
+                opacity: 1, 
+                scale: 1,
+                rotate: 0,
+                transition: {
+                  duration: 0.7,
+                  ease: [0.34, 1.56, 0.64, 1],
+                  opacity: { duration: 0.5 }
+                }
+              }}
+              exit={{ 
+                opacity: 0, 
+                scale: 0.7,
+                rotate: direction < 0 ? 90 : -90,
+                transition: {
+                  duration: 0.4,
+                  ease: "easeInOut"
+                }
+              }}
               className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 scale-[0.85] sm:scale-95 md:scale-90"
             >
               <svg viewBox="0 0 400 400" className="w-[125%] h-[125%] overflow-visible">
@@ -341,7 +361,10 @@ export default function RollingPizzaPage() {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ 
+                duration: 0.7, 
+                ease: [0.34, 1.56, 0.64, 1]
+              }}
               alt={currentPizza.title}
               fetchPriority="high"
               decoding="async"
@@ -397,7 +420,7 @@ export default function RollingPizzaPage() {
         </AnimatePresence>
 
         {/* MOBILE & TABLET ARROW BUTTONS */}
-        <div className="flex md:hidden items-center gap-8 mt-8 sm:mt-10 mb-2 z-30">
+        <div className="flex md:hidden items-center gap-8 mt-6 sm:mt-8 mb-2 z-30">
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => paginate(-1)}
@@ -419,13 +442,13 @@ export default function RollingPizzaPage() {
       </div>
 
       {/* BOTTOM SECTION */}
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 z-30 pb-20 pt-2 md:pt-6">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 z-30 pb-12 pt-2 md:pt-4">
         <div className="w-full">
           <h2 className="text-xs sm:text-sm md:text-2xl font-extrabold text-white tracking-wide mb-3 sm:mb-4 md:mb-6 text-left drop-shadow-md">
             What do you wanna eat ?
           </h2>
 
-          {/* Mobile Grid */}
+          {/* Mobile Grid Clean Floating Thumbnails */}
           <div className="grid grid-cols-3 gap-3 md:hidden">
             {CATEGORIES.map((cat, idx) => (
               <Link
@@ -435,11 +458,11 @@ export default function RollingPizzaPage() {
               >
                 <motion.div
                   whileTap={{ scale: 0.92 }}
-                  className="group flex flex-col items-center transition-all duration-300 cursor-pointer"
+                  className="group flex flex-col items-center cursor-pointer"
                 >
-                  <div className="relative w-20 h-20 sm:w-28 sm:h-28 flex items-center justify-center mb-1 group-hover:scale-110 transition-transform duration-300">
+                  <div className="relative w-16 h-16 sm:w-24 sm:h-24 flex items-center justify-center mb-1 group-hover:scale-110 transition-transform duration-300">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={cat.img} alt={cat.name} className="w-full h-full object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)]" />
+                    <img src={cat.img} alt={cat.name} className="w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.9)]" />
                   </div>
                   <span className="text-[10px] sm:text-xs font-bold text-white text-center group-hover:text-[#FF5500] transition-colors leading-tight drop-shadow-md">
                     {cat.name}
@@ -449,8 +472,8 @@ export default function RollingPizzaPage() {
             ))}
           </div>
 
-          {/* PC Large Horizontal Row */}
-          <div className="hidden md:flex flex-row items-center justify-between gap-6 w-full">
+          {/* PC Large Horizontal Row Clean Floating Thumbnails */}
+          <div className="hidden md:flex flex-row items-center justify-between gap-4 xl:gap-6 w-full">
             {CATEGORIES.map((cat, idx) => (
               <Link
                 key={idx}
@@ -458,13 +481,13 @@ export default function RollingPizzaPage() {
                 className="flex-1"
               >
                 <motion.div
-                  whileHover={{ y: -6, scale: 1.05 }}
+                  whileHover={{ y: -8, scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="group flex flex-col items-center transition-all duration-300 cursor-pointer"
+                  className="group flex flex-col items-center cursor-pointer"
                 >
                   <div className="relative w-24 h-24 xl:w-28 xl:h-28 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={cat.img} alt={cat.name} className="w-full h-full object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.9)]" />
+                    <img src={cat.img} alt={cat.name} className="w-full h-full object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.95)]" />
                   </div>
                   <span className="text-xs xl:text-sm font-bold text-white text-center group-hover:text-[#FF5500] transition-colors leading-tight drop-shadow-md whitespace-nowrap">
                     {cat.name}
@@ -522,7 +545,7 @@ export default function RollingPizzaPage() {
                 <div className="bg-gradient-to-r from-neutral-900 via-neutral-900/90 to-neutral-900 border border-neutral-800/80 p-4 sm:p-5 rounded-2xl mt-4">
                   <div className="flex items-center gap-2.5 mb-2">
                     <Users className="w-4 h-4 sm:w-5 sm:h-5 text-[#FF5500]" />
-                    <h3 className="text-xs sm:text-base font-bold text-white uppercase tracking-wider">Owner’s Desk</h3>
+                    <h3 className="text-xs sm:text-base font-bold text-white uppercase tracking-wider">Owner's Desk</h3>
                   </div>
                   <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed mb-3">The man standing behind the success of Laziz Pizza™ is <strong className="text-white">Keirron J Patil</strong> who has a great passion for cooking.</p>
                   <div className="mt-3.5 pt-3 border-t border-neutral-800/80 flex items-center justify-between">
