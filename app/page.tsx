@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, X, Award, Store, Users, Sparkles, Menu } from "lucide-react";
@@ -88,10 +88,10 @@ const CATEGORIES = [
 
 const IMAGE_VARIANTS = {
   enter: (direction: number) => ({
-    x: direction > 0 ? 200 : -200,
-    rotate: direction > 0 ? 90 : -90,
+    x: direction > 0 ? 150 : -150,
+    rotate: direction > 0 ? 45 : -45,
     opacity: 0,
-    scale: 0.85,
+    scale: 0.9,
   }),
   center: {
     x: 0,
@@ -100,10 +100,10 @@ const IMAGE_VARIANTS = {
     scale: 1,
   },
   exit: (direction: number) => ({
-    x: direction < 0 ? 200 : -200,
-    rotate: direction < 0 ? -90 : 90,
+    x: direction < 0 ? 150 : -150,
+    rotate: direction < 0 ? -45 : 45,
     opacity: 0,
-    scale: 0.85,
+    scale: 0.9,
   }),
 };
 
@@ -115,17 +115,45 @@ export default function RollingPizzaPage() {
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  
+  // Use a ref to track scroll interactions smoothly via requestAnimationFrame
+  const isScrollingRef = useRef(false);
 
   const paginate = useCallback((newDirection: number) => {
     setPage(([prevPage]) => [prevPage + newDirection, newDirection]);
   }, []);
 
-  // Continuous auto-scroll every 2 seconds without pausing on page scroll
+  // Use requestAnimationFrame to throttle interval triggers during active window scrolling
   useEffect(() => {
-    if (isHovered || isAboutOpen) return;
+    let scrollTimeout: NodeJS.Timeout;
+
+    const handleWindowScroll = () => {
+      isScrollingRef.current = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 150); // Small debounce buffer after scrolling stops
+    };
+
+    window.addEventListener("scroll", handleWindowScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleWindowScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
+
+  // Continuous loop that checks if the user is currently flinging/scrolling the window
+  useEffect(() => {
     const interval = setInterval(() => {
+      if (isHovered || isAboutOpen) return;
+      
+      // If user is actively scrolling the window, skip this tick to prevent jank, 
+      // ensuring smooth 60fps scrolling performance!
+      if (isScrollingRef.current) return;
+
       paginate(1);
     }, 2000);
+
     return () => clearInterval(interval);
   }, [paginate, isHovered, isAboutOpen]);
 
@@ -156,7 +184,6 @@ export default function RollingPizzaPage() {
         <div className="absolute top-[18%] left-[2%] md:left-[3%] transform -rotate-12">
           <p className="graffiti-text text-white/20 text-xl sm:text-2xl xl:text-3xl max-w-[200px] leading-tight">I LOVE THE SHAPE OF YOU</p>
         </div>
-
         <div className="absolute top-[42%] left-[2%] md:left-[3%] transform -rotate-6 hidden sm:block">
           <svg width="140" height="140" viewBox="0 0 100 100" className="absolute -top-6 -left-6 text-white/20" fill="none" stroke="currentColor" strokeWidth="1.5">
             <circle cx="50" cy="50" r="45" strokeDasharray="6 4" />
@@ -164,29 +191,23 @@ export default function RollingPizzaPage() {
           </svg>
           <p className="graffiti-text text-white/20 text-base sm:text-lg xl:text-xl text-center w-28 leading-snug">BUY ME PIZZA & TELL ME I AM PRETTY</p>
         </div>
-
         <div className="absolute bottom-[28%] left-[2%] md:left-[3%] transform -rotate-3">
           <p className="graffiti-text text-white/20 text-base sm:text-xl xl:text-2xl max-w-[220px] leading-tight">THE PERSON YOU LOVE<br />IS 72.8% PIZZA.</p>
         </div>
-
         <div className="absolute top-[15%] right-[2%] md:right-[3%] transform rotate-6">
           <p className="graffiti-text text-white/20 text-base sm:text-lg xl:text-xl text-right max-w-[180px] leading-tight">YOU ARE WHAT YOU EAT... SO I AM PIZZA.</p>
         </div>
-
         <div className="absolute top-[32%] right-[2%] md:right-[3%] transform rotate-12">
           <p className="graffiti-text text-white/20 text-3xl sm:text-4xl xl:text-5xl leading-[0.85] text-right">SLICE<br />SLICE<br />BABY</p>
         </div>
-
         <div className="absolute top-[55%] right-[2%] md:right-[3%] transform -rotate-6 hidden sm:block">
           <p className="graffiti-text text-white/20 text-xl xl:text-3xl whitespace-nowrap">PIZZA At Its Best</p>
         </div>
-
         <div className="absolute bottom-[25%] right-[2%] md:right-[3%] transform -rotate-12 drop-shadow-2xl">
           <div className="bg-[#cc1111]/90 rounded-full w-24 h-24 sm:w-28 sm:h-28 xl:w-32 xl:h-32 flex items-center justify-center p-2 border-2 border-white/40 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
             <p className="graffiti-text text-white/90 text-center text-xs sm:text-sm xl:text-base leading-tight">Don't<br />Worry<br /><span className="text-lg sm:text-xl xl:text-2xl">PIZZA</span><br />is Coming</p>
           </div>
         </div>
-
         <div className="absolute bottom-[8%] right-[4%] md:right-[5%] transform rotate-3 hidden sm:block">
           <p className="graffiti-text text-white/20 text-xl xl:text-3xl whitespace-nowrap">It's Laziz PIZZA DAY</p>
         </div>
@@ -296,10 +317,10 @@ export default function RollingPizzaPage() {
             <React.Fragment key={page}>
               <motion.div
                 custom={direction}
-                initial={{ opacity: 0, rotate: direction > 0 ? 45 : -45 }}
+                initial={{ opacity: 0, rotate: direction > 0 ? 30 : -30 }}
                 animate={{ opacity: 1, rotate: 0 }}
-                exit={{ opacity: 0, rotate: direction < 0 ? 45 : -45 }}
-                transition={{ duration: 0.45, ease: "easeInOut" }}
+                exit={{ opacity: 0, rotate: direction < 0 ? 30 : -30 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
                 className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 scale-[0.85] sm:scale-95 md:scale-90 [will-change:transform,opacity]"
               >
                 <svg viewBox="0 0 400 400" className="w-[125%] h-[125%] overflow-visible">
@@ -333,9 +354,9 @@ export default function RollingPizzaPage() {
                 animate="center"
                 exit="exit"
                 transition={{
-                  x: { type: "spring", stiffness: 300, damping: 30 },
-                  opacity: { duration: 0.3 },
-                  rotate: { duration: 0.45, ease: "easeOut" }
+                  x: { type: "spring", stiffness: 350, damping: 35 },
+                  opacity: { duration: 0.25 },
+                  rotate: { duration: 0.35, ease: "easeOut" }
                 }}
                 alt={currentPizza.title}
                 fetchPriority="high"
@@ -364,7 +385,7 @@ export default function RollingPizzaPage() {
                   animate={{ scale: 1, opacity: 1, y: [0, item.floatOffset, 0] }}
                   exit={{ scale: 0, opacity: 0 }}
                   transition={{
-                    scale: { duration: 0.35 },
+                    scale: { duration: 0.3 },
                     y: { repeat: Infinity, duration: item.duration, ease: "easeInOut" }
                   }}
                   src={item.src}
