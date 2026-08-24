@@ -115,46 +115,37 @@ export default function RollingPizzaPage() {
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  
-  // Use a ref to track scroll interactions smoothly via requestAnimationFrame
   const isScrollingRef = useRef(false);
 
   const paginate = useCallback((newDirection: number) => {
     setPage(([prevPage]) => [prevPage + newDirection, newDirection]);
   }, []);
 
-  // Use requestAnimationFrame to throttle interval triggers during active window scrolling
+  // Pause automatic transitions safely during active native scrolling
   useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout;
-
-    const handleWindowScroll = () => {
+    let timeoutId: NodeJS.Timeout;
+    const onScroll = () => {
       isScrollingRef.current = true;
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
         isScrollingRef.current = false;
-      }, 150); // Small debounce buffer after scrolling stops
+      }, 200);
     };
 
-    window.addEventListener("scroll", handleWindowScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
-      window.removeEventListener("scroll", handleWindowScroll);
-      clearTimeout(scrollTimeout);
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(timeoutId);
     };
   }, []);
 
-  // Continuous loop that checks if the user is currently flinging/scrolling the window
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (isHovered || isAboutOpen) return;
-      
-      // If user is actively scrolling the window, skip this tick to prevent jank, 
-      // ensuring smooth 60fps scrolling performance!
-      if (isScrollingRef.current) return;
-
+    const timer = setInterval(() => {
+      if (isHovered || isAboutOpen || isScrollingRef.current) return;
       paginate(1);
     }, 2000);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(timer);
   }, [paginate, isHovered, isAboutOpen]);
 
   useEffect(() => {
