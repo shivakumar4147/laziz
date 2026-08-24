@@ -111,7 +111,7 @@ const TOTAL_SEGMENTS = 6;
 const SEGMENTS = Array.from({ length: TOTAL_SEGMENTS });
 
 export default function RollingPizzaPage() {
-  const [[page, direction], setPage] = useState([4, 0]); // Default to Meat Lovers (index 4)
+  const [[page, direction], setPage] = useState([4, 0]);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -120,32 +120,20 @@ export default function RollingPizzaPage() {
     setPage(([prevPage]) => [prevPage + newDirection, newDirection]);
   }, []);
 
-  // Auto-scroll set to 5 seconds
+  // Continuous auto-scroll every 2 seconds without pausing on page scroll
   useEffect(() => {
     if (isHovered || isAboutOpen) return;
     const interval = setInterval(() => {
       paginate(1);
-    }, 3500);
+    }, 2000);
     return () => clearInterval(interval);
   }, [paginate, isHovered, isAboutOpen]);
 
   useEffect(() => {
     const imagesToPreload = [
-      "/1.webp",
-      "/2.webp",
-      "/3.webp",
-      "/4.webp",
-      "/5.webp",
-      "/6.webp",
-      "/onion.webp",
-      "/garlic.webp",
-      "/paneer.webp",
-      "/bellpepper.webp",
-      "/bacon.webp",
-      "/mushroom.webp",
-      "/pepperoni.webp",
-      "/tomato.webp",
-      "/image.webp",
+      "/1.webp", "/2.webp", "/3.webp", "/4.webp", "/5.webp", "/6.webp",
+      "/onion.webp", "/garlic.webp", "/paneer.webp", "/bellpepper.webp",
+      "/bacon.webp", "/mushroom.webp", "/pepperoni.webp", "/tomato.webp", "/image.webp",
     ];
     const timer = setTimeout(() => {
       imagesToPreload.forEach((src) => {
@@ -160,7 +148,7 @@ export default function RollingPizzaPage() {
   const currentPizza = PIZZAS[currentIndex];
 
   return (
-    <div className="w-full max-w-full min-h-screen min-h-[100dvh] bg-[radial-gradient(ellipse_at_center,_#6e1315_0%,_#1a0303_75%,_#000000_100%)] flex flex-col items-center justify-start overflow-x-hidden relative select-none">
+    <div className="w-full max-w-full min-h-screen min-h-[100dvh] bg-[radial-gradient(ellipse_at_center,_#6e1315_0%,_#1a0303_75%,_#000000_100%)] flex flex-col items-center justify-start overflow-x-hidden relative select-none [transform:translateZ(0)]">
       <PizzaLoader minDuration={1000} />
 
       {/* BACKGROUND GRAPHICS */}
@@ -277,9 +265,9 @@ export default function RollingPizzaPage() {
         )}
       </AnimatePresence>
 
-      {/* MAIN CAROUSEL CANVAS - Added increased vertical padding (pt-32 sm:pt-36 md:pt-36) */}
+      {/* MAIN CAROUSEL CANVAS */}
       <div 
-        className="relative w-full max-w-full flex flex-col items-center justify-center z-10 px-4 pt-32 sm:pt-36 md:pt-36 pb-2 md:pb-6"
+        className="relative w-full max-w-full flex flex-col items-center justify-center z-10 px-4 pt-32 sm:pt-36 md:pt-36 pb-2 md:pb-6 [will-change:transform]"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -303,7 +291,7 @@ export default function RollingPizzaPage() {
           <ChevronRight className="w-7 h-7 transition-transform group-hover:translate-x-1" />
         </motion.button>
 
-        <div className="relative w-[270px] h-[270px] sm:w-[350px] sm:h-[350px] md:w-[440px] md:h-[440px] flex items-center justify-center shrink-0 aspect-square">
+        <div className="relative w-[270px] h-[270px] sm:w-[350px] sm:h-[350px] md:w-[440px] md:h-[440px] flex items-center justify-center shrink-0 aspect-square [transform:translateZ(0)]">
           <AnimatePresence initial={false} custom={direction}>
             <React.Fragment key={page}>
               <motion.div
@@ -312,7 +300,7 @@ export default function RollingPizzaPage() {
                 animate={{ opacity: 1, rotate: 0 }}
                 exit={{ opacity: 0, rotate: direction < 0 ? 45 : -45 }}
                 transition={{ duration: 0.45, ease: "easeInOut" }}
-                className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 scale-[0.85] sm:scale-95 md:scale-90 style-gpu"
+                className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 scale-[0.85] sm:scale-95 md:scale-90 [will-change:transform,opacity]"
               >
                 <svg viewBox="0 0 400 400" className="w-[125%] h-[125%] overflow-visible">
                   <defs>
@@ -365,7 +353,7 @@ export default function RollingPizzaPage() {
                     paginate(-1);
                   }
                 }}
-                className="absolute inset-0 w-full h-full object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] pointer-events-auto cursor-grab active:cursor-grabbing z-10 touch-pan-y select-none will-change-transform"
+                className="absolute inset-0 w-full h-full object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] pointer-events-auto cursor-grab active:cursor-grabbing z-10 touch-pan-y select-none [will-change:transform,opacity]"
               />
 
               {/* FLOATING INGREDIENTS */}
@@ -382,7 +370,7 @@ export default function RollingPizzaPage() {
                   src={item.src}
                   alt={item.alt}
                   decoding="async"
-                  className={`absolute ${item.pos} ${item.size} object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none will-change-transform`}
+                  className={`absolute ${item.pos} ${item.size} object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] z-20 pointer-events-none [will-change:transform]`}
                 />
               ))}
             </React.Fragment>
