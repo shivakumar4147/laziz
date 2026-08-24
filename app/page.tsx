@@ -129,7 +129,7 @@ export default function RollingPizzaPage() {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         isScrollingRef.current = false;
-      }, 200);
+      }, 3000);
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
